@@ -1,0 +1,53 @@
+{
+  "brand": {
+    "name": "Beauvia",
+    "tagline": "Nature's Finest, Beautifully Formulated.",
+    "description": "Clean, botanical skincare crafted for radiant, healthy skin. Every formula is rooted in nature and proven by science.",
+    "founded": "2019",
+    "story": "Beauvia & CO. was born from a simple belief: your skin deserves the very best that nature has to offer. We blend ancient botanical wisdom with modern dermatology to create skincare that is both effective and kind to the earth."
+  },
+
+  "contact": {
+    "email": "hello@beauvia.net",
+    "phone": "+20 100 000 0000",
+    "instagram": "@beauvia.co",
+    "tiktok": "@beauvia.co",
+    "address": "Cairo, Egypt"
+  },
+
+  "stats": [
+    { "number": "12K+", "label": "Happy Customers" },
+    { "number": "98%",  "label": "Satisfaction Rate" },
+    { "number": "35+",  "label": "Natural Ingredients" },
+    { "number": "5★",   "label": "Average Rating" }
+  ],
+
+  "products": [
+    { "id": 1, "name": "Botanical Glow Serum", "category": "Serum", "price": 580, "badge": "Bestseller", "emoji": "🌿", "description": "Vitamin C + Hyaluronic Acid blend for luminous, hydrated skin. Works in 7 days.", "featured": true },
+    { "id": 2, "name": "Sage Repair Cream", "category": "Moisturizer", "price": 440, "badge": "Popular", "emoji": "🫧", "description": "Deep nourishment with shea butter and sage extract.", "featured": false },
+    { "id": 3, "name": "Green Clay Foam", "category": "Cleanser", "price": 320, "badge": "New", "emoji": "💧", "description": "Gentle detox cleanser for all skin types.", "featured": false },
+    { "id": 4, "name": "Restore Eye Elixir", "category": "Eye Cream", "price": 380, "badge": "", "emoji": "🌸", "description": "Reduces dark circles and puffiness overnight.", "featured": false },
+    { "id": 5, "name": "Overnight Dew Mask", "category": "Night Mask", "price": 520, "badge": "Fan Fave", "emoji": "🌙", "description": "Wake up to plump, glowing skin every morning.", "featured": false }
+  ],
+
+  "testimonials": [
+    {
+      "name": "Sara M.",
+      "avatar": "👩",
+      "text": "After two weeks of using the Botanical Glow Serum, my skin has never looked so radiant. Genuinely life-changing for my skincare routine!",
+      "stars": 5
+    },
+    {
+      "name": "Layla K.",
+      "avatar": "👩🏾",
+      "text": "I love that everything is natural and still works so well. The Sage Repair Cream is now my holy grail. My skin feels so soft and plump!",
+      "stars": 5
+    },
+    {
+      "name": "Nour A.",
+      "avatar": "👩🏻",
+      "text": "Finally a brand that is transparent about ingredients and actually delivers on its promises. The 4-step routine transformed my skin completely!",
+      "stars": 5
+    }
+  ]
+}
