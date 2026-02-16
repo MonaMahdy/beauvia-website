@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,124 +103,159 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            /* Fade + slight slide up */
             opacity: 0;
-            transform: translateY(12px);
             pointer-events: none;
-            transition: opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.3s ease-in;
         }
         .nav-menu.active {
             opacity: 1;
-            transform: translateY(0);
             pointer-events: all;
         }
 
-        /* Close button — top right */
+        /* Close button — top right, light touch */
         .close-menu {
             position: absolute;
-            top: 24px;
+            top: 26px;
             right: 28px;
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             cursor: pointer;
             stroke: var(--forest-green);
             z-index: 10;
-            background: rgba(31, 61, 43, 0.07);
-            border-radius: 10px;
+            background: rgba(31, 61, 43, 0.06);
+            border-radius: 8px;
             padding: 8px;
-            flex-shrink: 0;
-            transition: background 0.2s ease;
+            transition: background 0.2s ease, opacity 0.2s ease;
+            opacity: 0.75;
         }
-        .close-menu:hover { background: rgba(31, 61, 43, 0.14); }
+        .close-menu:hover {
+            background: rgba(31, 61, 43, 0.11);
+            opacity: 1;
+        }
 
-        /* Inner layout — full height, flex column */
+        /* Inner — three zones: top spacer, links, bottom */
         .nav-menu-inner {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             flex: 1;
-            padding: 96px 28px 48px;
+            padding: 130px 28px 52px;
+            min-height: 100vh;
         }
 
-        /* Nav links list */
+        /* Main links list */
         .nav-menu ul { list-style: none; }
 
         .nav-menu li {
             opacity: 0;
-            transform: translateY(14px);
+            transform: translateY(10px);
         }
         .nav-menu.active li {
-            animation: menuItemIn 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: navItemFade 0.35s ease-in forwards;
         }
-        .nav-menu.active li:nth-child(1) { animation-delay: 0.08s; }
-        .nav-menu.active li:nth-child(2) { animation-delay: 0.13s; }
-        .nav-menu.active li:nth-child(3) { animation-delay: 0.18s; }
-        .nav-menu.active li:nth-child(4) { animation-delay: 0.23s; }
-        .nav-menu.active li:nth-child(5) { animation-delay: 0.28s; }
-        .nav-menu.active li:nth-child(6) { animation-delay: 0.33s; }
+        .nav-menu.active li:nth-child(1) { animation-delay: 0.06s; }
+        .nav-menu.active li:nth-child(2) { animation-delay: 0.11s; }
+        .nav-menu.active li:nth-child(3) { animation-delay: 0.16s; }
+        .nav-menu.active li:nth-child(4) { animation-delay: 0.21s; }
+        .nav-menu.active li:nth-child(5) { animation-delay: 0.24s; }
+        .nav-menu.active li:nth-child(6) { animation-delay: 0.28s; }
 
-        @keyframes menuItemIn {
-            from { opacity: 0; transform: translateY(14px); }
+        @keyframes navItemFade {
+            from { opacity: 0; transform: translateY(10px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* Primary links */
-        .nav-menu a {
+        /* Primary nav links */
+        .nav-menu > .nav-menu-inner > ul > li > a {
             display: block;
             font-family: 'Crimson Pro', serif;
-            font-size: 38px;
+            font-size: 32px;
             font-weight: 300;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
             color: var(--forest-green);
             text-decoration: none;
-            padding: 10px 0;
-            line-height: 1.1;
-            transition: color 0.25s ease, letter-spacing 0.25s ease;
+            padding: 13px 0;
+            line-height: 1.15;
+            border-bottom: 1px solid rgba(31, 61, 43, 0.07);
+            transition: color 0.22s ease, padding-left 0.22s ease;
         }
-        .nav-menu a:hover {
+        .nav-menu > .nav-menu-inner > ul > li > a:hover {
             color: var(--soft-blush);
-            letter-spacing: 0.01em;
+            padding-left: 6px;
         }
 
-        /* Divider before Contact */
+        /* Soft divider li before Contact */
         .nav-divider {
             border: none;
-            border-top: 1px solid rgba(31, 61, 43, 0.12);
-            margin: 20px 0 18px;
+            border-top: 1px solid rgba(31, 61, 43, 0.1);
+            margin: 24px 0 20px;
         }
 
-        /* Contact link — smaller, muted */
-        .nav-contact-link a {
-            font-size: 15px !important;
+        /* Contact link — smaller, muted style */
+        .nav-contact-link > a {
             font-family: 'DM Sans', sans-serif !important;
+            font-size: 14px !important;
             font-weight: 500 !important;
-            letter-spacing: 0.3px !important;
-            color: rgba(31, 61, 43, 0.5) !important;
-            padding: 6px 0 !important;
+            letter-spacing: 0.2px !important;
+            color: rgba(31, 61, 43, 0.45) !important;
+            padding: 4px 0 !important;
+            border-bottom: none !important;
         }
-        .nav-contact-link a:hover {
+        .nav-contact-link > a:hover {
             color: var(--soft-blush) !important;
-            letter-spacing: 0.3px !important;
+            padding-left: 0 !important;
         }
+
+        /* Shop All outline button */
+        .nav-shop-all {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 32px;
+            padding: 11px 22px;
+            border: 1px solid rgba(31, 61, 43, 0.22);
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            color: var(--forest-green);
+            text-decoration: none;
+            transition: all 0.22s ease;
+            align-self: flex-start;
+            opacity: 0;
+        }
+        .nav-menu.active .nav-shop-all {
+            animation: navItemFade 0.35s ease-in 0.32s forwards;
+        }
+        .nav-shop-all:hover {
+            border-color: var(--forest-green);
+            background: rgba(31, 61, 43, 0.04);
+            gap: 11px;
+        }
+        .nav-shop-all svg {
+            width: 13px; height: 13px;
+            stroke: currentColor; stroke-width: 2;
+            transition: transform 0.2s ease;
+        }
+        .nav-shop-all:hover svg { transform: translateX(2px); }
 
         /* Bottom tagline */
         .nav-tagline {
-            margin-top: 48px;
-            padding-top: 28px;
+            padding-top: 24px;
             border-top: 1px solid rgba(31, 61, 43, 0.08);
             opacity: 0;
         }
         .nav-menu.active .nav-tagline {
-            animation: menuItemIn 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.42s forwards;
+            animation: navItemFade 0.35s ease-in 0.38s forwards;
         }
         .nav-tagline p {
-            font-family: 'Crimson Pro', serif;
-            font-size: 13px;
-            font-weight: 300;
-            letter-spacing: 1.5px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 2.2px;
             text-transform: uppercase;
-            color: rgba(31, 61, 43, 0.38);
+            color: rgba(31, 61, 43, 0.32);
         }
 
         /* Hero */
@@ -656,20 +690,30 @@
             <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
         <div class="nav-menu-inner">
-            <!-- Main links -->
-            <ul>
-                <li><a href="index.html" onclick="toggleMenu()">Home</a></li>
-                <li><a href="#routines" onclick="toggleMenu()">Routines</a></li>
-                <li><a href="#bestsellers" onclick="toggleMenu()">Best Sellers</a></li>
-                <li><a href="#ingredients" onclick="toggleMenu()">Ingredients</a></li>
-                <li><hr class="nav-divider"></li>
-                <li class="nav-contact-link"><a href="contact.html" onclick="toggleMenu()">Contact Us →</a></li>
-            </ul>
 
-            <!-- Brand tagline at bottom -->
-            <div class="nav-tagline">
-                <p>Korean Skincare · Directly Imported · Cairo</p>
+            <div>
+                <!-- Primary links -->
+                <ul>
+                    <li><a href="index.html"      onclick="toggleMenu()">Home</a></li>
+                    <li><a href="#routines"        onclick="toggleMenu()">Routines</a></li>
+                    <li><a href="#bestsellers"     onclick="toggleMenu()">Best Sellers</a></li>
+                    <li><a href="#ingredients"     onclick="toggleMenu()">Ingredients</a></li>
+                    <li><hr class="nav-divider"></li>
+                    <li class="nav-contact-link"><a href="contact.html" onclick="toggleMenu()">Contact Us →</a></li>
+                </ul>
+
+                <!-- Shop All outline button -->
+                <a href="#bestsellers" class="nav-shop-all" onclick="toggleMenu()">
+                    Shop All
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
             </div>
+
+            <!-- Brand tagline -->
+            <div class="nav-tagline">
+                <p>KOREAN SKINCARE &middot; DIRECTLY IMPORTED &middot; CAIRO</p>
+            </div>
+
         </div>
     </nav>
 
