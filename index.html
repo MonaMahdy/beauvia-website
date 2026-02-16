@@ -457,7 +457,6 @@
             .split-row { min-height: 560px; }
             .split-text { padding: 80px 72px; }
         }
-
         /* Featured Routines */
         .featured-routines { padding: 80px 20px; background: var(--white); }
 
@@ -638,13 +637,22 @@
         }
 
         @media (min-width: 1024px) {
-            .header { min-height: 95px; }
-            .logo img { height: 80px; }
-            .values-grid { grid-template-columns: repeat(3, 1fr); }
-            .routines-grid, .products-grid { grid-template-columns: repeat(3, 1fr); }
-            .footer-grid { grid-template-columns: repeat(4, 1fr); }
-        }
-    </style>
+    .header { min-height: 95px; }
+    .logo img { height: 80px; }
+    .values-grid { grid-template-columns: repeat(3, 1fr); }
+    .routines-grid, .products-grid { grid-template-columns: repeat(3, 1fr); }
+    .footer-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Fix browser default link colors in mobile menu */
+.nav-menu a,
+.nav-menu a:link,
+.nav-menu a:visited,
+.nav-menu a:active {
+    color: var(--forest-green) !important;
+    text-decoration: none !important;
+}
+</style>
 </head>
 <body>
 
