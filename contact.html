@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us — BEAUVIA&CO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-nude: #EFE6DD;
+            --forest-green: #1F3D2B;
+            --soft-blush: #D8B7A6;
+            --subtle-gold: #C6A75E;
+            --white: #FFFFFF;
+            --text-muted: rgba(31, 61, 43, 0.55);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-nude);
+            color: var(--forest-green);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Crimson Pro', serif; font-weight: 300; letter-spacing: -0.02em; }
+
+        /* Announcement Bar */
+        .announcement-bar {
+            background: var(--forest-green); color: var(--bg-nude);
+            padding: 12px 0; font-size: 13px; letter-spacing: 0.8px; font-weight: 500; overflow: hidden;
+        }
+        .announcement-track { display: flex; animation: scroll 25s linear infinite; white-space: nowrap; }
+        .announcement-item { padding: 0 60px; display: inline-flex; align-items: center; gap: 10px; }
+        .announcement-separator { width: 4px; height: 4px; background: var(--soft-blush); border-radius: 50%; opacity: 0.6; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .announcement-bar:hover .announcement-track { animation-play-state: paused; }
+
+        /* Header */
+        .header {
+            background: var(--bg-nude); padding: 18px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(31, 61, 43, 0.08);
+            min-height: 80px; transition: box-shadow 0.3s ease;
+        }
+        .header.scrolled { box-shadow: 0 4px 20px rgba(31, 61, 43, 0.06); }
+
+        .logo {
+            position: absolute; left: 50%; transform: translateX(-50%);
+            display: flex; align-items: center; text-decoration: none;
+            color: var(--forest-green); transition: opacity 0.3s ease;
+        }
+        .logo:hover { opacity: 0.7; }
+        .logo img { height: 65px; width: auto; display: block; }
+        .logo-text { font-family: 'Crimson Pro', serif; font-size: 24px; font-weight: 400; letter-spacing: 0.5px; }
+
+        .back-link {
+            display: flex; align-items: center; gap: 8px; text-decoration: none;
+            color: var(--forest-green); font-size: 14px; font-weight: 500;
+            transition: opacity 0.3s ease; z-index: 10;
+        }
+        .back-link:hover { opacity: 0.6; }
+
+        .cart-icon {
+            width: 24px; height: 24px; cursor: pointer; z-index: 10;
+            stroke: var(--forest-green); transition: opacity 0.3s ease;
+        }
+        .cart-icon:hover { opacity: 0.6; }
+
+        /* Page Hero */
+        .page-hero {
+            padding: 80px 20px 60px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 0.7s ease-out 0.1s forwards;
+        }
+
+        .page-hero-label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: slideUp 0.5s ease-out 0.2s forwards;
+        }
+
+        .page-hero h1 {
+            font-size: clamp(52px, 10vw, 80px);
+            line-height: 1.0;
+            letter-spacing: -0.04em;
+            font-weight: 300;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: slideUp 0.6s ease-out 0.3s forwards;
+        }
+
+        .page-hero h1 em {
+            font-style: italic;
+            color: var(--soft-blush);
+        }
+
+        .page-hero p {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 380px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: slideUp 0.6s ease-out 0.5s forwards;
+        }
+
+        /* Contact Container */
+        .contact-container {
+            max-width: 620px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        /* Accordion */
+        .accordion-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out 0.6s forwards;
+        }
+
+        .accordion-item {
+            background: var(--white);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 1px 12px rgba(31, 61, 43, 0.05);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .accordion-item.open {
+            box-shadow: 0 4px 28px rgba(31, 61, 43, 0.09);
+        }
+
+        .accordion-trigger {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 22px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.2s ease;
+        }
+
+        .accordion-trigger:hover { background: rgba(239, 230, 221, 0.35); }
+        .accordion-item.open .accordion-trigger { background: rgba(239, 230, 221, 0.2); }
+
+        .accordion-trigger-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .accordion-icon-wrap {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--bg-nude);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-item.open .accordion-icon-wrap { background: rgba(31, 61, 43, 0.07); }
+
+        .accordion-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 22px;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            color: var(--forest-green);
+        }
+
+        .accordion-chevron {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-muted);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            flex-shrink: 0;
+        }
+
+        .accordion-item.open .accordion-chevron { transform: rotate(180deg); }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .accordion-item.open .accordion-body { max-height: 700px; }
+
+        .accordion-body-inner {
+            padding: 4px 28px 28px;
+        }
+
+        /* ── Email Section ── */
+        .email-rows { display: flex; flex-direction: column; gap: 10px; }
+
+        .email-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            background: var(--bg-nude);
+            border-radius: 12px;
+            transition: background 0.25s ease;
+        }
+
+        .email-row:hover { background: #e5ddd5; }
+
+        .email-row a {
+            color: var(--forest-green);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        .copy-btn {
+            background: none; border: none; cursor: pointer;
+            padding: 6px; display: flex; align-items: center; justify-content: center;
+            color: var(--text-muted); border-radius: 7px; transition: all 0.2s ease;
+        }
+        .copy-btn:hover { color: var(--forest-green); background: rgba(31, 61, 43, 0.07); }
+        .copy-btn.copied { color: var(--subtle-gold); }
+        .copy-btn svg { width: 15px; height: 15px; stroke: currentColor; }
+
+        /* ── Call Section ── */
+        .call-block { display: flex; flex-direction: column; gap: 12px; }
+
+        .phone-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 20px;
+            background: var(--bg-nude);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--forest-green);
+            font-size: 17px;
+            font-weight: 500;
+            transition: background 0.25s ease;
+            align-self: flex-start;
+        }
+        .phone-pill:hover { background: #e5ddd5; }
+
+        .hours-block {
+            padding: 16px 18px;
+            background: rgba(31, 61, 43, 0.04);
+            border-radius: 12px;
+        }
+
+        .hours-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.9px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .hours-text {
+            font-size: 14px;
+            color: var(--forest-green);
+            line-height: 1.7;
+        }
+
+        /* ── Message Form ── */
+        .message-form { display: flex; flex-direction: column; gap: 14px; }
+
+        .field-group { display: flex; flex-direction: column; gap: 6px; }
+
+        .field-group label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .field-group input,
+        .field-group textarea {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1.5px solid rgba(31, 61, 43, 0.12);
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            background: var(--bg-nude);
+            color: var(--forest-green);
+            transition: all 0.25s ease;
+            outline: none;
+        }
+
+        .field-group input::placeholder,
+        .field-group textarea::placeholder { color: var(--text-muted); }
+
+        .field-group input:focus,
+        .field-group textarea:focus {
+            border-color: var(--forest-green);
+            background: var(--white);
+            box-shadow: 0 2px 12px rgba(31, 61, 43, 0.07);
+        }
+
+        .field-group textarea { resize: vertical; min-height: 110px; }
+
+        .btn-send {
+            align-self: flex-start;
+            background: var(--forest-green);
+            color: var(--bg-nude);
+            padding: 14px 36px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-send::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 100%);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+
+        .btn-send:hover::before { opacity: 1; }
+        .btn-send:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(31, 61, 43, 0.18); }
+        .btn-send:active { transform: translateY(0); }
+
+        .btn-send.sent {
+            background: var(--soft-blush);
+            pointer-events: none;
+        }
+
+        /* ── Business Details ── */
+        .details-grid { display: flex; flex-direction: column; gap: 12px; }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 18px;
+            background: var(--bg-nude);
+            border-radius: 12px;
+        }
+
+        .detail-icon {
+            font-size: 16px;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .detail-content {}
+        .detail-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+        .detail-value {
+            font-size: 14px;
+            color: var(--forest-green);
+            line-height: 1.5;
+        }
+
+        .response-note {
+            margin-top: 8px;
+            padding: 14px 18px;
+            background: rgba(31, 61, 43, 0.04);
+            border-radius: 12px;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .response-note strong {
+            color: var(--forest-green);
+            font-weight: 600;
+        }
+
+        /* Footer minimal */
+        .footer {
+            background: var(--forest-green);
+            color: var(--bg-nude);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-inner { max-width: 620px; margin: 0 auto; }
+
+        .footer-logo-text {
+            font-family: 'Crimson Pro', serif;
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+            color: var(--bg-nude);
+            margin-bottom: 12px;
+        }
+
+        .footer-mini-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+
+        .footer-mini-links a {
+            color: rgba(239, 230, 221, 0.7);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+        .footer-mini-links a:hover { color: var(--soft-blush); }
+
+        .footer-copy {
+            font-size: 12px;
+            color: rgba(239, 230, 221, 0.45);
+        }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .logo img { height: 75px; }
+            .page-hero { padding: 100px 20px 70px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="announcement-bar">
+        <div class="announcement-track">
+            <span class="announcement-item">Directly Imported Korean Skincare</span>
+            <span class="announcement-separator"></span>
+            <span class="announcement-item">Authenticity Guaranteed</span>
+            <span class="announcement-separator"></span>
+            <span class="announcement-item">Ships from Cairo</span>
+            <span class="announcement-separator"></span>
+            <span class="announcement-item">Directly Imported Korean Skincare</span>
+            <span class="announcement-separator"></span>
+            <span class="announcement-item">Authenticity Guaranteed</span>
+            <span class="announcement-separator"></span>
+            <span class="announcement-item">Ships from Cairo</span>
+            <span class="announcement-separator"></span>
+        </div>
+    </div>
+
+    <header class="header">
+        <a href="index.html" class="back-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 5l-7 7 7 7"/>
+            </svg>
+            <span>Back</span>
+        </a>
+
+        <a href="index.html" class="logo">
+            <img src="beauvia-logo.png" alt="BEAUVIA&CO" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="logo-text" style="display:none;">BEAUVIA&CO</span>
+        </a>
+
+        <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+    </header>
+
+    <!-- Page Hero -->
+    <div class="page-hero">
+        <p class="page-hero-label">Get in touch</p>
+        <h1>Let's <em>Talk</em></h1>
+        <p>We're here to help — whether it's a product question, order update, or just a skincare chat.</p>
+    </div>
+
+    <!-- Accordion Contact Sections -->
+    <div class="contact-container">
+        <div class="accordion-stack">
+
+            <!-- Email Us -->
+            <div class="accordion-item" id="acc-email">
+                <button class="accordion-trigger" onclick="toggleAcc('acc-email')">
+                    <div class="accordion-trigger-left">
+                        <div class="accordion-icon-wrap">✉️</div>
+                        <span class="accordion-title">Email Us</span>
+                    </div>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </button>
+                <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                        <div class="email-rows">
+                            <div class="email-row">
+                                <a href="mailto:admin@beauvia.net">admin@beauvia.net</a>
+                                <button class="copy-btn" onclick="copyEmail('admin@beauvia.net', this)" title="Copy email">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="email-row">
+                                <a href="mailto:support@beauvia.net">support@beauvia.net</a>
+                                <button class="copy-btn" onclick="copyEmail('support@beauvia.net', this)" title="Copy email">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call Us -->
+            <div class="accordion-item" id="acc-call">
+                <button class="accordion-trigger" onclick="toggleAcc('acc-call')">
+                    <div class="accordion-trigger-left">
+                        <div class="accordion-icon-wrap">📞</div>
+                        <span class="accordion-title">Call Us</span>
+                    </div>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </button>
+                <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                        <div class="call-block">
+                            <a href="tel:+201152197848" class="phone-pill">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.72 12 19.79 19.79 0 0 1 1.64 3.4 2 2 0 0 1 3.62 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.09 6.09l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                                +20 115 219 7848
+                            </a>
+                            <div class="hours-block">
+                                <p class="hours-label">Business Hours</p>
+                                <p class="hours-text">
+                                    Saturday – Thursday: 10:00 AM – 8:00 PM<br>
+                                    Friday: Closed
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Send a Message -->
+            <div class="accordion-item" id="acc-message">
+                <button class="accordion-trigger" onclick="toggleAcc('acc-message')">
+                    <div class="accordion-trigger-left">
+                        <div class="accordion-icon-wrap">💬</div>
+                        <span class="accordion-title">Send a Message</span>
+                    </div>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </button>
+                <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                        <form class="message-form" onsubmit="handleSubmit(event)">
+                            <div class="field-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" placeholder="Your name" required>
+                            </div>
+                            <div class="field-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="your@email.com" required>
+                            </div>
+                            <div class="field-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" placeholder="How can we help you?" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-send" id="sendBtn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Details -->
+            <div class="accordion-item" id="acc-details">
+                <button class="accordion-trigger" onclick="toggleAcc('acc-details')">
+                    <div class="accordion-trigger-left">
+                        <div class="accordion-icon-wrap">📍</div>
+                        <span class="accordion-title">Business Details</span>
+                    </div>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </button>
+                <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <span class="detail-icon">📍</span>
+                                <div class="detail-content">
+                                    <p class="detail-label">Location</p>
+                                    <p class="detail-value">Cairo, Egypt</p>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">🕐</span>
+                                <div class="detail-content">
+                                    <p class="detail-label">Working Hours</p>
+                                    <p class="detail-value">Sat – Thu: 10:00 AM – 8:00 PM<br>Friday: Closed</p>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">📦</span>
+                                <div class="detail-content">
+                                    <p class="detail-label">Ships From</p>
+                                    <p class="detail-value">Cairo, Egypt — Nationwide delivery</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="response-note">
+                            <strong>Response time:</strong> We typically reply within 24–48 hours on business days. For urgent matters, please call us directly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <p class="footer-logo-text">BEAUVIA&CO</p>
+            <div class="footer-mini-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#bestsellers">Shop</a>
+                <a href="index.html#routines">Routines</a>
+                <a href="mailto:admin@beauvia.net">Email</a>
+            </div>
+            <p class="footer-copy">&copy; 2024 BEAUVIA&CO. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Accordion toggle — only one open at a time
+        function toggleAcc(id) {
+            const item = document.getElementById(id);
+            const isOpen = item.classList.contains('open');
+
+            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('open'));
+
+            if (!isOpen) item.classList.add('open');
+        }
+
+        // Copy email to clipboard
+        function copyEmail(text, btn) {
+            navigator.clipboard.writeText(text).then(() => {
+                btn.classList.add('copied');
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" style="width:15px;height:15px;stroke:currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" style="width:15px;height:15px;stroke:currentColor"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+                }, 2500);
+            });
+        }
+
+        // Form submit
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('sendBtn');
+            btn.textContent = '✓ Message Sent';
+            btn.classList.add('sent');
+            setTimeout(() => {
+                btn.textContent = 'Send Message';
+                btn.classList.remove('sent');
+                e.target.reset();
+            }, 3000);
+        }
+
+        // Header scroll shadow
+        window.addEventListener('scroll', () => {
+            document.querySelector('.header').classList.toggle('scrolled', window.pageYOffset > 50);
+        });
+
+        // Open first accordion by default
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => toggleAcc('acc-email'), 700);
+        });
+    </script>
+</body>
+</html>
