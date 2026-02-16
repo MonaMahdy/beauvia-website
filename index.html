@@ -66,6 +66,9 @@
             transition: box-shadow 0.3s ease;
         }
 
+        /* Push header below menu layer when open */
+        .header.menu-open { z-index: 1 !important; }
+
         .header.scrolled { box-shadow: 0 4px 20px rgba(31, 61, 43, 0.06); }
 
         .logo {
@@ -89,53 +92,68 @@
         }
         .menu-icon:hover, .cart-icon:hover { opacity: 0.6; }
 
-        /* Nav Overlay — covers everything including announcement bar + header */
+        /* Nav Overlay — fixed, covers 100% of viewport including header */
         .nav-overlay {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(31, 61, 43, 0.45);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(31, 61, 43, 0.5);
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.4s ease, visibility 0.4s ease;
             z-index: 9998;
-            backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(3px);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
         }
         .nav-overlay.active { opacity: 1; visibility: visible; }
 
-        /* Nav Menu — slides in on top of everything */
+        /* Nav Menu — slides in over everything from top:0 */
         .nav-menu {
             position: fixed;
-            top: 0; left: -100%;
-            width: min(300px, 85vw);
-            height: 100%;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100vh;
             background: var(--white);
-            padding: 0;
             transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 9999;
-            box-shadow: 4px 0 40px rgba(31, 61, 43, 0.15);
             overflow-y: auto;
             display: flex;
             flex-direction: column;
         }
         .nav-menu.active { left: 0; }
 
-        /* Menu inner padding so content clears the close button */
-        .nav-menu ul {
-            list-style: none;
-            padding: 90px 32px 40px;
+        /* Menu inner layout */
+        .nav-menu-inner {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 100px 40px 60px;
+            width: 100%;
             flex: 1;
         }
 
-        .close-menu {
-            position: absolute; top: 24px; right: 24px;
-            width: 32px; height: 32px; cursor: pointer;
-            stroke: var(--forest-green); z-index: 1;
-            background: rgba(31,61,43,0.06);
-            border-radius: 8px; padding: 4px;
+        .nav-menu ul {
+            list-style: none;
         }
-        .close-menu:hover { background: rgba(31,61,43,0.12); }
+
+        .close-menu {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            stroke: var(--forest-green);
+            z-index: 10000;
+            background: rgba(31, 61, 43, 0.08);
+            border-radius: 10px;
+            padding: 6px;
+            display: none;
+        }
+        .close-menu:hover { background: rgba(31, 61, 43, 0.15); }
+        .nav-menu.active .close-menu { display: block; }
 
         .nav-menu li { margin-bottom: 25px; opacity: 0; animation: slideInLeft 0.3s ease forwards; }
         .nav-menu.active li:nth-child(1) { animation-delay: 0.1s; }
@@ -441,14 +459,16 @@
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
-        <ul>
-            <li><a href="index.html" onclick="toggleMenu()">Home</a></li>
-            <li><a href="#routines" onclick="toggleMenu()">Routines</a></li>
-            <li><a href="#bestsellers" onclick="toggleMenu()">Best Sellers</a></li>
-            <li><a href="#ingredients" onclick="toggleMenu()">Ingredients</a></li>
-            <li><hr class="nav-divider"></li>
-            <li class="nav-contact-link"><a href="contact.html" onclick="toggleMenu()">Contact Us →</a></li>
-        </ul>
+        <div class="nav-menu-inner">
+            <ul>
+                <li><a href="index.html" onclick="toggleMenu()">Home</a></li>
+                <li><a href="#routines" onclick="toggleMenu()">Routines</a></li>
+                <li><a href="#bestsellers" onclick="toggleMenu()">Best Sellers</a></li>
+                <li><a href="#ingredients" onclick="toggleMenu()">Ingredients</a></li>
+                <li><hr class="nav-divider"></li>
+                <li class="nav-contact-link"><a href="contact.html" onclick="toggleMenu()">Contact Us →</a></li>
+            </ul>
+        </div>
     </nav>
 
     <section class="hero">
@@ -682,10 +702,12 @@
         function toggleMenu() {
             const menu = document.querySelector('.nav-menu');
             const overlay = document.querySelector('.nav-overlay');
+            const header = document.querySelector('.header');
             const isOpening = !menu.classList.contains('active');
 
             menu.classList.toggle('active');
             overlay.classList.toggle('active');
+            header.classList.toggle('menu-open', isOpening);
 
             // Lock background scroll when menu is open
             document.body.style.overflow = isOpening ? 'hidden' : '';
