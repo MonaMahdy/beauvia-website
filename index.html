@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,86 +93,136 @@
         }
         .menu-icon:hover, .cart-icon:hover { opacity: 0.6; }
 
-        /* Nav Overlay — fixed, covers 100% of viewport including header */
-        .nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(31, 61, 43, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-            z-index: 9998;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-        }
-        .nav-overlay.active { opacity: 1; visibility: visible; }
-
-        /* Nav Menu — slides in over everything from top:0 */
+        /* ── Full-Screen Mobile Menu ── */
         .nav-menu {
             position: fixed;
-            top: 0;
-            left: -100%;
+            top: 0; left: 0;
             width: 100%;
             height: 100vh;
-            background: var(--white);
-            transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--bg-nude);
             z-index: 9999;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            /* Fade + slight slide up */
+            opacity: 0;
+            transform: translateY(12px);
+            pointer-events: none;
+            transition: opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .nav-menu.active { left: 0; }
-
-        /* Menu inner layout */
-        .nav-menu-inner {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 100px 40px 60px;
-            width: 100%;
-            flex: 1;
-        }
-
-        .nav-menu ul {
-            list-style: none;
+        .nav-menu.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
         }
 
+        /* Close button — top right */
         .close-menu {
-            position: fixed;
+            position: absolute;
             top: 24px;
-            right: 24px;
-            width: 36px;
-            height: 36px;
+            right: 28px;
+            width: 38px;
+            height: 38px;
             cursor: pointer;
             stroke: var(--forest-green);
-            z-index: 10000;
-            background: rgba(31, 61, 43, 0.08);
+            z-index: 10;
+            background: rgba(31, 61, 43, 0.07);
             border-radius: 10px;
-            padding: 6px;
-            display: none;
+            padding: 8px;
+            flex-shrink: 0;
+            transition: background 0.2s ease;
         }
-        .close-menu:hover { background: rgba(31, 61, 43, 0.15); }
-        .nav-menu.active .close-menu { display: block; }
+        .close-menu:hover { background: rgba(31, 61, 43, 0.14); }
 
-        .nav-menu li { margin-bottom: 25px; opacity: 0; animation: slideInLeft 0.3s ease forwards; }
-        .nav-menu.active li:nth-child(1) { animation-delay: 0.1s; }
-        .nav-menu.active li:nth-child(2) { animation-delay: 0.15s; }
-        .nav-menu.active li:nth-child(3) { animation-delay: 0.2s; }
-        .nav-menu.active li:nth-child(4) { animation-delay: 0.25s; }
-        .nav-menu.active li:nth-child(5) { animation-delay: 0.3s; }
-        .nav-menu.active li:nth-child(6) { animation-delay: 0.35s; }
+        /* Inner layout — full height, flex column */
+        .nav-menu-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex: 1;
+            padding: 96px 28px 48px;
+        }
 
-        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        /* Nav links list */
+        .nav-menu ul { list-style: none; }
 
-        .nav-menu a { color: var(--forest-green); text-decoration: none; font-size: 18px; font-weight: 500; transition: color 0.3s ease; }
-        .nav-menu a:hover { color: var(--soft-blush); }
+        .nav-menu li {
+            opacity: 0;
+            transform: translateY(14px);
+        }
+        .nav-menu.active li {
+            animation: menuItemIn 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .nav-menu.active li:nth-child(1) { animation-delay: 0.08s; }
+        .nav-menu.active li:nth-child(2) { animation-delay: 0.13s; }
+        .nav-menu.active li:nth-child(3) { animation-delay: 0.18s; }
+        .nav-menu.active li:nth-child(4) { animation-delay: 0.23s; }
+        .nav-menu.active li:nth-child(5) { animation-delay: 0.28s; }
+        .nav-menu.active li:nth-child(6) { animation-delay: 0.33s; }
 
-        .nav-divider { border: none; border-top: 1px solid rgba(31,61,43,0.1); margin: 10px 0 20px; }
+        @keyframes menuItemIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
 
-        .nav-contact-link a { font-size: 15px !important; color: rgba(31,61,43,0.6) !important; }
-        .nav-contact-link a:hover { color: var(--soft-blush) !important; }
+        /* Primary links */
+        .nav-menu a {
+            display: block;
+            font-family: 'Crimson Pro', serif;
+            font-size: 38px;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: var(--forest-green);
+            text-decoration: none;
+            padding: 10px 0;
+            line-height: 1.1;
+            transition: color 0.25s ease, letter-spacing 0.25s ease;
+        }
+        .nav-menu a:hover {
+            color: var(--soft-blush);
+            letter-spacing: 0.01em;
+        }
+
+        /* Divider before Contact */
+        .nav-divider {
+            border: none;
+            border-top: 1px solid rgba(31, 61, 43, 0.12);
+            margin: 20px 0 18px;
+        }
+
+        /* Contact link — smaller, muted */
+        .nav-contact-link a {
+            font-size: 15px !important;
+            font-family: 'DM Sans', sans-serif !important;
+            font-weight: 500 !important;
+            letter-spacing: 0.3px !important;
+            color: rgba(31, 61, 43, 0.5) !important;
+            padding: 6px 0 !important;
+        }
+        .nav-contact-link a:hover {
+            color: var(--soft-blush) !important;
+            letter-spacing: 0.3px !important;
+        }
+
+        /* Bottom tagline */
+        .nav-tagline {
+            margin-top: 48px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(31, 61, 43, 0.08);
+            opacity: 0;
+        }
+        .nav-menu.active .nav-tagline {
+            animation: menuItemIn 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.42s forwards;
+        }
+        .nav-tagline p {
+            font-family: 'Crimson Pro', serif;
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(31, 61, 43, 0.38);
+        }
 
         /* Hero */
         .hero {
@@ -210,22 +261,168 @@
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(31, 61, 43, 0.18), 0 0 0 2px var(--soft-blush); }
         .btn-primary:active { transform: translateY(0); }
 
-        /* Core Values */
-        .core-values { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
-        .values-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 50px; }
+        /* ── Editorial Split Sections ── */
+        .split-sections { display: flex; flex-direction: column; }
 
-        .value-card {
-            background: var(--white); padding: 40px 30px; border-radius: 16px; text-align: center;
-            box-shadow: 0 2px 20px rgba(31, 61, 43, 0.06); transition: all 0.3s ease; opacity: 0;
+        .split-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            min-height: 480px;
+            opacity: 0;
         }
-        .value-card.visible { animation: fadeInUp 0.6s ease forwards; }
-        .value-card:nth-child(1).visible { animation-delay: 0.1s; }
-        .value-card:nth-child(2).visible { animation-delay: 0.2s; }
-        .value-card:nth-child(3).visible { animation-delay: 0.3s; }
-        .value-card:hover { transform: translateY(-6px); box-shadow: 0 8px 32px rgba(31, 61, 43, 0.12); }
-        .value-icon { font-size: 48px; margin-bottom: 20px; }
-        .value-card h3 { font-size: 28px; margin-bottom: 15px; }
-        .value-card p { font-size: 15px; color: rgba(31, 61, 43, 0.7); line-height: 1.7; }
+        .split-row.visible { animation: fadeInUp 0.7s ease forwards; }
+        .split-row:nth-child(1).visible { animation-delay: 0.05s; }
+        .split-row:nth-child(2).visible { animation-delay: 0.15s; }
+        .split-row:nth-child(3).visible { animation-delay: 0.25s; }
+
+        /* Image panel */
+        .split-image {
+            position: relative;
+            overflow: hidden;
+            min-height: 320px;
+        }
+
+        .split-image-fill {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.7s ease;
+        }
+        .split-row:hover .split-image-fill { transform: scale(1.04); }
+
+        /* Hydrate image */
+        .split-image.hydrate .split-image-fill {
+            background: linear-gradient(145deg, #c5dde8 0%, #a8c8d8 30%, #d4e8f0 60%, #b8d4e0 100%);
+        }
+        .split-image.hydrate .split-image-fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 30% 50%, rgba(255,255,255,0.35) 0%, transparent 55%),
+                radial-gradient(circle at 75% 25%, rgba(168,200,216,0.5) 0%, transparent 45%);
+        }
+
+        /* Repair image */
+        .split-image.repair .split-image-fill {
+            background: linear-gradient(145deg, #c8d8c0 0%, #a8c4a0 30%, #d8e8d0 60%, #b8ccb0 100%);
+        }
+        .split-image.repair .split-image-fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 65% 40%, rgba(255,255,255,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 20% 70%, rgba(168,196,160,0.5) 0%, transparent 45%);
+        }
+
+        /* Calm image */
+        .split-image.calm .split-image-fill {
+            background: linear-gradient(145deg, #d8c8b8 0%, #c4a890 30%, #e8d8c8 60%, #d0b8a0 100%);
+        }
+        .split-image.calm .split-image-fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 40% 35%, rgba(255,255,255,0.28) 0%, transparent 50%),
+                radial-gradient(circle at 70% 65%, rgba(196,168,144,0.45) 0%, transparent 45%);
+        }
+
+        /* Subtle label on image */
+        .split-image-label {
+            position: absolute;
+            bottom: 28px;
+            left: 32px;
+            font-family: 'Crimson Pro', serif;
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(31, 61, 43, 0.5);
+        }
+
+        /* Text panel */
+        .split-text {
+            display: flex;
+            align-items: center;
+            padding: 52px 40px;
+            background: var(--white);
+        }
+
+        .split-text-inner { max-width: 380px; }
+
+        .split-number {
+            font-family: 'Crimson Pro', serif;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            color: var(--soft-blush);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .split-text h3 {
+            font-size: clamp(36px, 5vw, 52px);
+            line-height: 1.0;
+            letter-spacing: -0.03em;
+            font-weight: 300;
+            color: var(--forest-green);
+            margin-bottom: 18px;
+        }
+
+        .split-text p {
+            font-size: 15px;
+            color: rgba(31, 61, 43, 0.65);
+            line-height: 1.65;
+            margin-bottom: 28px;
+            max-width: 280px;
+        }
+
+        .split-explore {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--forest-green);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(31, 61, 43, 0.25);
+            padding-bottom: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .split-explore:hover {
+            color: var(--soft-blush);
+            border-bottom-color: var(--soft-blush);
+            gap: 13px;
+        }
+
+        .split-explore svg {
+            width: 14px; height: 14px;
+            stroke: currentColor;
+            transition: transform 0.3s ease;
+        }
+
+        .split-explore:hover svg { transform: translateX(3px); }
+
+        /* Alternate: image right on even rows */
+        @media (min-width: 768px) {
+            .split-row {
+                grid-template-columns: 1fr 1fr;
+                min-height: 520px;
+            }
+            .split-row.reverse .split-image { order: 2; }
+            .split-row.reverse .split-text  { order: 1; }
+            .split-text { padding: 60px 56px; }
+        }
+
+        @media (min-width: 1024px) {
+            .split-row { min-height: 560px; }
+            .split-text { padding: 80px 72px; }
+        }
 
         /* Featured Routines */
         .featured-routines { padding: 80px 20px; background: var(--white); }
@@ -453,13 +650,13 @@
         </svg>
     </header>
 
-    <div class="nav-overlay" onclick="toggleMenu()"></div>
     <nav class="nav-menu">
         <svg class="close-menu" onclick="toggleMenu()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
         <div class="nav-menu-inner">
+            <!-- Main links -->
             <ul>
                 <li><a href="index.html" onclick="toggleMenu()">Home</a></li>
                 <li><a href="#routines" onclick="toggleMenu()">Routines</a></li>
@@ -468,6 +665,11 @@
                 <li><hr class="nav-divider"></li>
                 <li class="nav-contact-link"><a href="contact.html" onclick="toggleMenu()">Contact Us →</a></li>
             </ul>
+
+            <!-- Brand tagline at bottom -->
+            <div class="nav-tagline">
+                <p>Korean Skincare · Directly Imported · Cairo</p>
+            </div>
         </div>
     </nav>
 
@@ -477,24 +679,65 @@
         <a href="#bestsellers" class="btn-primary">Start Your Routine</a>
     </section>
 
-    <section class="core-values">
-        <div class="values-grid">
-            <div class="value-card">
-                <div class="value-icon">💧</div>
-                <h3>Hydrate</h3>
-                <p>Deep moisture that lasts all day. Our hydration-focused formulas use multi-weight hyaluronic acid to quench every layer of your skin.</p>
+    <section class="split-sections">
+
+        <!-- Hydrate -->
+        <div class="split-row">
+            <div class="split-image hydrate">
+                <div class="split-image-fill"></div>
+                <span class="split-image-label">Deep Hydration</span>
             </div>
-            <div class="value-card">
-                <div class="value-icon">🛡</div>
-                <h3>Repair</h3>
-                <p>Strengthen your skin barrier with ceramide-rich products. Build resilience against daily stressors and environmental damage.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">🌿</div>
-                <h3>Calm</h3>
-                <p>Soothe sensitivity with gentle botanical ingredients. Centella asiatica and madecassoside reduce redness and irritation naturally.</p>
+            <div class="split-text">
+                <div class="split-text-inner">
+                    <p class="split-number">01 — Hydrate</p>
+                    <h3>Quench<br>every layer.</h3>
+                    <p>Multi-weight hyaluronic acid that reaches deep — leaving skin plump, bouncy, and balanced.</p>
+                    <a href="#bestsellers" class="split-explore">
+                        Explore
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
             </div>
         </div>
+
+        <!-- Repair -->
+        <div class="split-row reverse">
+            <div class="split-image repair">
+                <div class="split-image-fill"></div>
+                <span class="split-image-label">Barrier Repair</span>
+            </div>
+            <div class="split-text">
+                <div class="split-text-inner">
+                    <p class="split-number">02 — Repair</p>
+                    <h3>Rebuild<br>your barrier.</h3>
+                    <p>Ceramide-rich formulas that restore strength, seal in moisture, and protect daily.</p>
+                    <a href="#bestsellers" class="split-explore">
+                        Explore
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calm -->
+        <div class="split-row">
+            <div class="split-image calm">
+                <div class="split-image-fill"></div>
+                <span class="split-image-label">Soothe & Calm</span>
+            </div>
+            <div class="split-text">
+                <div class="split-text-inner">
+                    <p class="split-number">03 — Calm</p>
+                    <h3>Soothe<br>the sensitive.</h3>
+                    <p>Centella asiatica and botanical actives that quiet redness and reduce irritation gently.</p>
+                    <a href="#bestsellers" class="split-explore">
+                        Explore
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </section>
 
     <section class="featured-routines" id="routines">
@@ -701,15 +944,11 @@
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         function toggleMenu() {
             const menu = document.querySelector('.nav-menu');
-            const overlay = document.querySelector('.nav-overlay');
             const header = document.querySelector('.header');
             const isOpening = !menu.classList.contains('active');
 
             menu.classList.toggle('active');
-            overlay.classList.toggle('active');
             header.classList.toggle('menu-open', isOpening);
-
-            // Lock background scroll when menu is open
             document.body.style.overflow = isOpening ? 'hidden' : '';
         }
 
@@ -722,7 +961,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const animatedElements = document.querySelectorAll(
-                '.value-card, .routine-card, .product-card, .ingredient-card, .section-title'
+                '.split-row, .routine-card, .product-card, .ingredient-card, .section-title'
             );
             animatedElements.forEach(el => observer.observe(el));
 
