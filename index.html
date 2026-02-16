@@ -20,7 +20,6 @@
             --soft-blush: #D8B7A6;
             --subtle-gold: #C6A75E;
             --white: #FFFFFF;
-            --light-forest: rgba(31, 61, 43, 0.05);
         }
 
         body {
@@ -37,7 +36,6 @@
             letter-spacing: -0.02em;
         }
 
-        /* Announcement Bar */
         .announcement-bar {
             background: var(--forest-green);
             color: var(--bg-nude);
@@ -48,7 +46,6 @@
             font-weight: 500;
         }
 
-        /* Header */
         .header {
             background: var(--bg-nude);
             padding: 18px 20px;
@@ -68,13 +65,21 @@
             transform: translateX(-50%);
             display: flex;
             align-items: center;
+            text-decoration: none;
+            color: var(--forest-green);
         }
 
-        /* استخدام اللوجو كصورة */
         .logo img {
             height: 65px;
             width: auto;
             display: block;
+        }
+
+        .logo-text {
+            font-family: 'Crimson Pro', serif;
+            font-size: 24px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
         }
 
         .menu-icon, .cart-icon {
@@ -85,7 +90,6 @@
             stroke: var(--forest-green);
         }
 
-        /* Navigation Menu */
         .nav-menu {
             position: fixed;
             top: 0;
@@ -151,7 +155,6 @@
             color: var(--soft-blush);
         }
 
-        /* Hero Section */
         .hero {
             padding: 80px 20px;
             text-align: center;
@@ -197,7 +200,6 @@
             box-shadow: 0 8px 20px rgba(31, 61, 43, 0.2);
         }
 
-        /* Core Values Section */
         .core-values {
             padding: 80px 20px;
             max-width: 1200px;
@@ -241,7 +243,6 @@
             line-height: 1.7;
         }
 
-        /* Featured Routines */
         .featured-routines {
             padding: 80px 20px;
             background: var(--white);
@@ -324,7 +325,6 @@
             color: var(--bg-nude);
         }
 
-        /* Best Sellers */
         .best-sellers {
             padding: 80px 20px;
             max-width: 1200px;
@@ -428,7 +428,6 @@
             transform: translateY(-2px);
         }
 
-        /* Ingredient Library */
         .ingredient-library {
             padding: 80px 20px;
             background: var(--white);
@@ -461,7 +460,6 @@
             line-height: 1.7;
         }
 
-        /* Contact Section */
         .contact-section {
             padding: 80px 20px;
             max-width: 800px;
@@ -530,7 +528,6 @@
             min-height: 120px;
         }
 
-        /* Footer */
         .footer {
             background: var(--forest-green);
             color: var(--bg-nude);
@@ -614,14 +611,16 @@
             color: var(--soft-blush);
         }
 
-        /* Animations */
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--forest-green);
+        }
+
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes slideUp {
@@ -635,63 +634,30 @@
             }
         }
 
-        /* Tablet and Desktop */
         @media (min-width: 768px) {
-            .header {
-                min-height: 90px;
-            }
-
-            .logo img {
-                height: 75px;
-            }
-
-            .values-grid,
-            .routines-grid,
-            .products-grid,
-            .ingredients-grid {
+            .header { min-height: 90px; }
+            .logo img { height: 75px; }
+            .values-grid, .routines-grid, .products-grid, .ingredients-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .hero h1 {
-                font-size: 56px;
-            }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 56px; }
         }
 
         @media (min-width: 1024px) {
-            .header {
-                min-height: 95px;
-            }
-
-            .logo img {
-                height: 80px;
-            }
-
-            .values-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .routines-grid,
-            .products-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .footer-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
+            .header { min-height: 95px; }
+            .logo img { height: 80px; }
+            .values-grid { grid-template-columns: repeat(3, 1fr); }
+            .routines-grid, .products-grid { grid-template-columns: repeat(3, 1fr); }
+            .footer-grid { grid-template-columns: repeat(4, 1fr); }
         }
     </style>
 </head>
 <body>
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
+    <div class="announcement-bar" id="announcementBar">
         Directly Imported Korean Skincare
     </div>
 
-    <!-- Header -->
     <header class="header">
         <svg class="menu-icon" onclick="toggleMenu()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -699,9 +665,9 @@
             <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
         
-        <!-- لوجو BEAUVIA&CO بالصورة -->
         <a href="https://beauvia.net" class="logo">
-            <img src="beauvia-logo.png" alt="BEAUVIA&CO - Elevating Beauty, Together">
+            <img src="beauvia-logo.png" alt="BEAUVIA&CO" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="logo-text" style="display:none;">BEAUVIA&CO</span>
         </a>
 
         <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -711,7 +677,6 @@
         </svg>
     </header>
 
-    <!-- Navigation Menu -->
     <div class="nav-overlay" onclick="toggleMenu()"></div>
     <nav class="nav-menu">
         <svg class="close-menu" onclick="toggleMenu()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -724,18 +689,15 @@
             <li><a href="#bestsellers" onclick="toggleMenu()">Best Sellers</a></li>
             <li><a href="#ingredients" onclick="toggleMenu()">Ingredients</a></li>
             <li><a href="#contact" onclick="toggleMenu()">Contact Us</a></li>
-            <li><a href="#about" onclick="toggleMenu()">About</a></li>
         </ul>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <h1>Healthy Skin Starts<br>With a Strong Barrier</h1>
         <p>Hydration-first Korean skincare for modern girls.</p>
         <a href="#bestsellers" class="btn-primary">Start Your Routine</a>
     </section>
 
-    <!-- Core Values -->
     <section class="core-values">
         <div class="values-grid">
             <div class="value-card">
@@ -756,137 +718,22 @@
         </div>
     </section>
 
-    <!-- Featured Routines -->
+    <!-- Routines Section - يتم تعبئتها من JSON -->
     <section class="featured-routines" id="routines">
         <h2 class="section-title">Featured Routines</h2>
-        <div class="routines-grid">
-            <div class="routine-card">
-                <div class="routine-image">💧</div>
-                <div class="routine-content">
-                    <h3>Dry Skin Reset</h3>
-                    <p>A complete hydration routine for parched, tight skin that needs serious moisture.</p>
-                    <div class="routine-products">
-                        3 Products • Complete Routine
-                    </div>
-                    <a href="#" class="btn-secondary">View Routine</a>
-                </div>
-            </div>
-            <div class="routine-card">
-                <div class="routine-image">🛡</div>
-                <div class="routine-content">
-                    <h3>Barrier Repair Kit</h3>
-                    <p>Rebuild compromised skin with ceramides and gentle barrier-supporting actives.</p>
-                    <div class="routine-products">
-                        4 Products • Complete Routine
-                    </div>
-                    <a href="#" class="btn-secondary">View Routine</a>
-                </div>
-            </div>
-            <div class="routine-card">
-                <div class="routine-image">✨</div>
-                <div class="routine-content">
-                    <h3>Glass Skin Hydration</h3>
-                    <p>Achieve that luminous, dewy glass skin glow with layered hydration.</p>
-                    <div class="routine-products">
-                        5 Products • Complete Routine
-                    </div>
-                    <a href="#" class="btn-secondary">View Routine</a>
-                </div>
-            </div>
+        <div class="routines-grid" id="routinesContainer">
+            <div class="loading">Loading routines...</div>
         </div>
     </section>
 
-    <!-- Best Sellers -->
+    <!-- Products Section - يتم تعبئتها من JSON -->
     <section class="best-sellers" id="bestsellers">
         <h2 class="section-title">Best Sellers</h2>
-        <div class="products-grid">
-            <div class="product-card">
-                <div class="product-image">
-                    <div class="product-badge">DIRECTLY IMPORTED</div>
-                    <div class="product-tag">💧</div>
-                    <div class="product-placeholder">🧴</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Hydrating Toner</h3>
-                    <div class="product-price">450 EGP</div>
-                    <p class="product-description">Multi-layer hydration with 7 types of hyaluronic acid. Plumps and prepares skin for serums.</p>
-                    <button class="btn-add-to-bag">Add to Bag</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <div class="product-badge">DIRECTLY IMPORTED</div>
-                    <div class="product-tag">🛡</div>
-                    <div class="product-placeholder">🧴</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Barrier Cream</h3>
-                    <div class="product-price">620 EGP</div>
-                    <p class="product-description">Rich ceramide complex strengthens skin barrier. Locks in moisture without heaviness.</p>
-                    <button class="btn-add-to-bag">Add to Bag</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <div class="product-badge">DIRECTLY IMPORTED</div>
-                    <div class="product-tag">🌿</div>
-                    <div class="product-placeholder">🧴</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Centella Serum</h3>
-                    <div class="product-price">580 EGP</div>
-                    <p class="product-description">Pure centella extract calms irritation and redness. Perfect for sensitive or stressed skin.</p>
-                    <button class="btn-add-to-bag">Add to Bag</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <div class="product-badge">DIRECTLY IMPORTED</div>
-                    <div class="product-tag">💧</div>
-                    <div class="product-placeholder">🧴</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Essence Mist</h3>
-                    <div class="product-price">380 EGP</div>
-                    <p class="product-description">Lightweight hydrating mist for instant refreshment. Layer or use throughout the day.</p>
-                    <button class="btn-add-to-bag">Add to Bag</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <div class="product-badge">DIRECTLY IMPORTED</div>
-                    <div class="product-tag">✨</div>
-                    <div class="product-placeholder">🧴</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Glass Skin Serum</h3>
-                    <div class="product-price">690 EGP</div>
-                    <p class="product-description">Luminous glow serum with niacinamide and fermented extracts. Brightens and evens texture.</p>
-                    <button class="btn-add-to-bag">Add to Bag</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <div class="product-badge">DIRECTLY IMPORTED</div>
-                    <div class="product-tag">🛡</div>
-                    <div class="product-placeholder">🧴</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Night Repair Mask</h3>
-                    <div class="product-price">520 EGP</div>
-                    <p class="product-description">Overnight treatment repairs while you sleep. Wake up to softer, smoother skin.</p>
-                    <button class="btn-add-to-bag">Add to Bag</button>
-                </div>
-            </div>
+        <div class="products-grid" id="productsContainer">
+            <div class="loading">Loading products...</div>
         </div>
     </section>
 
-    <!-- Ingredient Library -->
     <section class="ingredient-library" id="ingredients">
         <h2 class="section-title">Ingredient Library</h2>
         <p style="text-align: center; max-width: 600px; margin: 0 auto 30px; color: rgba(31, 61, 43, 0.7);">
@@ -908,22 +755,10 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section class="contact-section" id="contact">
         <h2 class="section-title">Contact Us</h2>
-        <div class="contact-info">
-            <div class="contact-item">
-                <h3>Email</h3>
-                <p><a href="mailto:admin@beauvia.net">admin@beauvia.net</a></p>
-            </div>
-            <div class="contact-item">
-                <h3>Location</h3>
-                <p>Cairo, Egypt</p>
-            </div>
-            <div class="contact-item">
-                <h3>Business Hours</h3>
-                <p>Saturday - Thursday: 10:00 AM - 8:00 PM<br>Friday: Closed</p>
-            </div>
+        <div class="contact-info" id="contactInfo">
+            <div class="loading">Loading contact info...</div>
         </div>
 
         <div class="contact-form">
@@ -950,7 +785,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-grid">
@@ -961,9 +795,9 @@
                     <p style="font-size: 14px; line-height: 1.7; color: rgba(239, 230, 221, 0.8);">
                         Directly imported Korean skincare focused on hydration and barrier health. Authentic products for modern girls.
                     </p>
-                    <div class="social-links">
-                        <a href="https://instagram.com/beauvia" target="_blank">📷</a>
-                        <a href="https://facebook.com/beauvia" target="_blank">📱</a>
+                    <div class="social-links" id="socialLinks">
+                        <a href="#">📷</a>
+                        <a href="#">📱</a>
                         <a href="mailto:admin@beauvia.net">✉️</a>
                     </div>
                 </div>
@@ -992,50 +826,17 @@
                         <li><a href="#">Terms & Conditions</a></li>
                         <li><a href="#contact">Contact Us</a></li>
                     </ul>
-                    <p class="footer-email" style="margin-top: 20px;">
+                    <p class="footer-email" style="margin-top: 20px;" id="footerEmail">
                         <a href="mailto:admin@beauvia.net">admin@beauvia.net</a>
                     </p>
                 </div>
             </div>
-            <div class="footer-bottom">
+            <div class="footer-bottom" id="footerCopyright">
                 <p>&copy; 2024 BEAUVIA&CO. All rights reserved. Directly Imported Korean Skincare.</p>
             </div>
         </div>
     </footer>
 
-    <script>
-        function toggleMenu() {
-            const menu = document.querySelector('.nav-menu');
-            const overlay = document.querySelector('.nav-overlay');
-            menu.classList.toggle('active');
-            overlay.classList.toggle('active');
-        }
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Add to bag animation
-        document.querySelectorAll('.btn-add-to-bag').forEach(button => {
-            button.addEventListener('click', function() {
-                this.textContent = '✓ Added to Bag';
-                this.style.background = 'var(--soft-blush)';
-                setTimeout(() => {
-                    this.textContent = 'Add to Bag';
-                    this.style.background = 'var(--forest-green)';
-                }, 2000);
-            });
-        });
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
