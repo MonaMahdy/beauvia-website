@@ -1,0 +1,111 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Hydrating Toner",
+      "price": 450,
+      "currency": "EGP",
+      "description": "Multi-layer hydration with 7 types of hyaluronic acid. Plumps and prepares skin for serums.",
+      "category": "hydrate",
+      "tag": "💧",
+      "image": "product-1.jpg",
+      "badge": "DIRECTLY IMPORTED"
+    },
+    {
+      "id": 2,
+      "name": "Barrier Cream",
+      "price": 620,
+      "currency": "EGP",
+      "description": "Rich ceramide complex strengthens skin barrier. Locks in moisture without heaviness.",
+      "category": "repair",
+      "tag": "🛡",
+      "image": "product-2.jpg",
+      "badge": "DIRECTLY IMPORTED"
+    },
+    {
+      "id": 3,
+      "name": "Centella Serum",
+      "price": 580,
+      "currency": "EGP",
+      "description": "Pure centella extract calms irritation and redness. Perfect for sensitive or stressed skin.",
+      "category": "calm",
+      "tag": "🌿",
+      "image": "product-3.jpg",
+      "badge": "DIRECTLY IMPORTED"
+    },
+    {
+      "id": 4,
+      "name": "Essence Mist",
+      "price": 380,
+      "currency": "EGP",
+      "description": "Lightweight hydrating mist for instant refreshment. Layer or use throughout the day.",
+      "category": "hydrate",
+      "tag": "💧",
+      "image": "product-4.jpg",
+      "badge": "DIRECTLY IMPORTED"
+    },
+    {
+      "id": 5,
+      "name": "Glass Skin Serum",
+      "price": 690,
+      "currency": "EGP",
+      "description": "Luminous glow serum with niacinamide and fermented extracts. Brightens and evens texture.",
+      "category": "glow",
+      "tag": "✨",
+      "image": "product-5.jpg",
+      "badge": "DIRECTLY IMPORTED"
+    },
+    {
+      "id": 6,
+      "name": "Night Repair Mask",
+      "price": 520,
+      "currency": "EGP",
+      "description": "Overnight treatment repairs while you sleep. Wake up to softer, smoother skin.",
+      "category": "repair",
+      "tag": "🛡",
+      "image": "product-6.jpg",
+      "badge": "DIRECTLY IMPORTED"
+    }
+  ],
+  "routines": [
+    {
+      "id": 1,
+      "name": "Dry Skin Reset",
+      "description": "A complete hydration routine for parched, tight skin that needs serious moisture.",
+      "icon": "💧",
+      "products_count": 3,
+      "type": "Complete Routine"
+    },
+    {
+      "id": 2,
+      "name": "Barrier Repair Kit",
+      "description": "Rebuild compromised skin with ceramides and gentle barrier-supporting actives.",
+      "icon": "🛡",
+      "products_count": 4,
+      "type": "Complete Routine"
+    },
+    {
+      "id": 3,
+      "name": "Glass Skin Hydration",
+      "description": "Achieve that luminous, dewy glass skin glow with layered hydration.",
+      "icon": "✨",
+      "products_count": 5,
+      "type": "Complete Routine"
+    }
+  ],
+  "site_settings": {
+    "brand_name": "BEAUVIA&CO",
+    "domain": "beauvia.net",
+    "email": "admin@beauvia.net",
+    "location": "Cairo, Egypt",
+    "announcement_bar": "Directly Imported Korean Skincare",
+    "business_hours": {
+      "weekdays": "Saturday - Thursday: 10:00 AM - 8:00 PM",
+      "friday": "Friday: Closed"
+    },
+    "social_media": {
+      "instagram": "https://instagram.com/beauvia",
+      "facebook": "https://facebook.com/beauvia"
+    }
+  }
+}
