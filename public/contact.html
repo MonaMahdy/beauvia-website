@@ -483,11 +483,14 @@
             <span class="logo-text" style="display:none;">BEAUVIA&CO</span>
         </a>
 
-        <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-        </svg>
+        <a href="cart.html" class="cart-wrapper" style="position:relative;text-decoration:none;">
+            <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span id="cartCount" style="display:none;position:absolute;top:-6px;right:-8px;background:var(--soft-blush);color:var(--forest-green);font-size:11px;font-weight:700;width:18px;height:18px;border-radius:50%;text-align:center;line-height:18px;">0</span>
+        </a>
     </header>
 
     <!-- Page Hero -->
@@ -706,6 +709,13 @@
         // Open first accordion by default
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => toggleAcc('acc-email'), 700);
+            // Cart badge
+            try {
+                const cart = JSON.parse(localStorage.getItem('beauvia_cart')) || [];
+                const count = cart.reduce((s, i) => s + i.quantity, 0);
+                const badge = document.getElementById('cartCount');
+                if (badge && count > 0) { badge.textContent = count; badge.style.display = 'block'; }
+            } catch(e) {}
         });
     </script>
 </body>

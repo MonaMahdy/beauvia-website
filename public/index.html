@@ -685,11 +685,14 @@
             <span class="logo-text" style="display:none;">BEAUVIA&CO</span>
         </a>
 
-        <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-        </svg>
+        <a href="cart.html" class="cart-wrapper" style="position:relative;text-decoration:none;">
+            <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span id="cartCount" style="display:none;position:absolute;top:-6px;right:-8px;background:var(--soft-blush);color:var(--forest-green);font-size:11px;font-weight:700;width:18px;height:18px;border-radius:50%;text-align:center;line-height:18px;">0</span>
+        </a>
     </header>
 
     <nav class="nav-menu">
@@ -827,85 +830,9 @@
 
     <section class="best-sellers" id="bestsellers">
         <h2 class="section-title">Best Sellers</h2>
-        <div class="products-grid">
-            <div class="product-card">
-                <div class="product-image">
-                    <div class="product-badge">DIRECTLY IMPORTED</div>
-                    <div class="product-tag">💧</div>
-                    <div class="product-placeholder">🧴</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Hydrating Toner</h3>
-                    <div class="product-price">450 EGP</div>
-                    <p class="product-description">Multi-layer hydration with 7 types of hyaluronic acid. Plumps and prepares skin for serums.</p>
-                    <button class="btn-add-to-bag">Add to Bag</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <div class="product-badge">DIRECTLY IMPORTED</div>
-                    <div class="product-tag">🛡</div>
-                    <div class="product-placeholder">🧴</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Barrier Cream</h3>
-                    <div class="product-price">620 EGP</div>
-                    <p class="product-description">Rich ceramide complex strengthens skin barrier. Locks in moisture without heaviness.</p>
-                    <button class="btn-add-to-bag">Add to Bag</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <div class="product-badge">DIRECTLY IMPORTED</div>
-                    <div class="product-tag">🌿</div>
-                    <div class="product-placeholder">🧴</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Centella Serum</h3>
-                    <div class="product-price">580 EGP</div>
-                    <p class="product-description">Pure centella extract calms irritation and redness. Perfect for sensitive or stressed skin.</p>
-                    <button class="btn-add-to-bag">Add to Bag</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <div class="product-badge">DIRECTLY IMPORTED</div>
-                    <div class="product-tag">💧</div>
-                    <div class="product-placeholder">🧴</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Essence Mist</h3>
-                    <div class="product-price">380 EGP</div>
-                    <p class="product-description">Lightweight hydrating mist for instant refreshment. Layer or use throughout the day.</p>
-                    <button class="btn-add-to-bag">Add to Bag</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <div class="product-badge">DIRECTLY IMPORTED</div>
-                    <div class="product-tag">✨</div>
-                    <div class="product-placeholder">🧴</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Glass Skin Serum</h3>
-                    <div class="product-price">690 EGP</div>
-                    <p class="product-description">Luminous glow serum with niacinamide and fermented extracts. Brightens and evens texture.</p>
-                    <button class="btn-add-to-bag">Add to Bag</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">
-                    <div class="product-badge">DIRECTLY IMPORTED</div>
-                    <div class="product-tag">🛡</div>
-                    <div class="product-placeholder">🧴</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Night Repair Mask</h3>
-                    <div class="product-price">520 EGP</div>
-                    <p class="product-description">Overnight treatment repairs while you sleep. Wake up to softer, smoother skin.</p>
-                    <button class="btn-add-to-bag">Add to Bag</button>
-                </div>
-            </div>
+        <div class="products-grid" id="productsGrid">
+            <!-- Products loaded dynamically from API -->
+            <p style="text-align:center; grid-column:1/-1; padding:40px; color:rgba(31,61,43,0.5);">Loading products...</p>
         </div>
     </section>
 
@@ -993,33 +920,92 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
+        // ── Cart (localStorage) ──
+        function getCart() {
+            try { return JSON.parse(localStorage.getItem('beauvia_cart')) || []; }
+            catch { return []; }
+        }
+        function saveCart(cart) { localStorage.setItem('beauvia_cart', JSON.stringify(cart)); }
+        function updateCartBadge() {
+            const cart = getCart();
+            const count = cart.reduce((s, i) => s + i.quantity, 0);
+            const badge = document.getElementById('cartCount');
+            if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'block' : 'none'; }
+        }
+        function addToCart(id, name, price, image) {
+            const cart = getCart();
+            const existing = cart.find(i => i.product_id === id);
+            if (existing) { existing.quantity++; } else {
+                cart.push({ product_id: id, name, price, image, quantity: 1 });
+            }
+            saveCart(cart);
+            updateCartBadge();
+        }
+
+        // ── Load products from API ──
+        async function loadProducts() {
+            const grid = document.getElementById('productsGrid');
+            try {
+                const res = await fetch('/api/products');
+                const products = await res.json();
+                if (!products.length) { grid.innerHTML = '<p style="text-align:center;grid-column:1/-1;padding:40px;color:rgba(31,61,43,0.5);">No products available.</p>'; return; }
+                grid.innerHTML = products.map(p => `
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="product-badge">${escapeHtml(p.badge || 'DIRECTLY IMPORTED')}</div>
+                            <div class="product-tag">${escapeHtml(p.tag)}</div>
+                            ${p.image ? `<img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" style="width:100%;height:100%;object-fit:cover;">` : '<div class="product-placeholder">\uD83E\uDDF4</div>'}
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">${escapeHtml(p.name)}</h3>
+                            <div class="product-price">${Number(p.price).toLocaleString()} EGP</div>
+                            <p class="product-description">${escapeHtml(p.description)}</p>
+                            <button class="btn-add-to-bag" onclick="handleAddToBag(this, ${p.id}, '${escapeHtml(p.name).replace(/'/g, "\\'")}', ${p.price}, '${escapeHtml(p.image || '')}')">Add to Bag</button>
+                        </div>
+                    </div>
+                `).join('');
+                // Re-observe for animations
+                document.querySelectorAll('.product-card').forEach(el => observer.observe(el));
+            } catch (err) {
+                grid.innerHTML = '<p style="text-align:center;grid-column:1/-1;padding:40px;color:#d32f2f;">Could not load products.</p>';
+            }
+        }
+
+        function handleAddToBag(btn, id, name, price, image) {
+            addToCart(id, name, price, image);
+            btn.textContent = '\u2713 Added to Bag';
+            btn.style.background = 'var(--soft-blush)';
+            setTimeout(() => { btn.textContent = 'Add to Bag'; btn.style.background = 'var(--forest-green)'; }, 2000);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            const d = document.createElement('div'); d.textContent = str; return d.innerHTML;
+        }
+
+        // ── Menu toggle ──
         function toggleMenu() {
             const menu = document.querySelector('.nav-menu');
             const header = document.querySelector('.header');
             const isOpening = !menu.classList.contains('active');
-
             menu.classList.toggle('active');
             header.classList.toggle('menu-open', isOpening);
             document.body.style.overflow = isOpening ? 'hidden' : '';
         }
 
+        // ── Scroll animations ──
         const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, observerOptions);
 
         document.addEventListener('DOMContentLoaded', () => {
-            const animatedElements = document.querySelectorAll(
-                '.split-row, .routine-card, .product-card, .ingredient-card, .section-title'
-            );
-            animatedElements.forEach(el => observer.observe(el));
-
+            loadProducts();
+            updateCartBadge();
+            document.querySelectorAll('.split-row, .routine-card, .ingredient-card, .section-title').forEach(el => observer.observe(el));
             window.addEventListener('scroll', () => {
-                const header = document.querySelector('.header');
-                header.classList.toggle('scrolled', window.pageYOffset > 50);
+                document.querySelector('.header').classList.toggle('scrolled', window.pageYOffset > 50);
             });
         });
 
@@ -1028,17 +1014,6 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
-
-        document.querySelectorAll('.btn-add-to-bag').forEach(button => {
-            button.addEventListener('click', function() {
-                this.textContent = '✓ Added to Bag';
-                this.style.background = 'var(--soft-blush)';
-                setTimeout(() => {
-                    this.textContent = 'Add to Bag';
-                    this.style.background = 'var(--forest-green)';
-                }, 2000);
             });
         });
     </script>

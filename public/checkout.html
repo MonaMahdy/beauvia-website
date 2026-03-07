@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout — BEAUVIA&CO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-nude: #EFE6DD;
+            --forest-green: #1F3D2B;
+            --soft-blush: #D8B7A6;
+            --subtle-gold: #C6A75E;
+            --white: #FFFFFF;
+            --text-muted: rgba(31, 61, 43, 0.55);
+        }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg-nude); color: var(--forest-green); line-height: 1.6; min-height: 100vh; }
+        h1, h2, h3, h4 { font-family: 'Crimson Pro', serif; font-weight: 300; letter-spacing: -0.02em; }
+
+        .announcement-bar { background: var(--forest-green); color: var(--bg-nude); padding: 12px 0; font-size: 13px; letter-spacing: 0.8px; font-weight: 500; overflow: hidden; }
+        .announcement-track { display: flex; animation: scroll 25s linear infinite; white-space: nowrap; }
+        .announcement-item { padding: 0 60px; display: inline-flex; align-items: center; gap: 10px; }
+        .announcement-separator { width: 4px; height: 4px; background: var(--soft-blush); border-radius: 50%; opacity: 0.6; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .header { background: var(--bg-nude); padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(31, 61, 43, 0.08); min-height: 80px; transition: box-shadow 0.3s ease; }
+        .header.scrolled { box-shadow: 0 4px 20px rgba(31, 61, 43, 0.06); }
+        .logo { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; text-decoration: none; color: var(--forest-green); transition: opacity 0.3s ease; }
+        .logo:hover { opacity: 0.7; }
+        .logo img { height: 65px; width: auto; display: block; }
+        .logo-text { font-family: 'Crimson Pro', serif; font-size: 24px; font-weight: 400; }
+        .back-link { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--forest-green); font-size: 14px; font-weight: 500; transition: opacity 0.3s; z-index: 10; }
+        .back-link:hover { opacity: 0.6; }
+
+        .page-hero { padding: 60px 20px 40px; text-align: center; }
+        .page-hero h1 { font-size: clamp(42px, 8vw, 64px); line-height: 1.0; letter-spacing: -0.04em; font-weight: 300; margin-bottom: 12px; }
+        .page-hero h1 em { font-style: italic; color: var(--soft-blush); }
+
+        .checkout-container { max-width: 700px; margin: 0 auto; padding: 0 20px 80px; }
+
+        .checkout-section { background: var(--white); border-radius: 18px; padding: 28px; margin-bottom: 16px; box-shadow: 0 1px 12px rgba(31, 61, 43, 0.05); }
+        .checkout-section h3 { font-size: 22px; font-weight: 400; margin-bottom: 20px; }
+
+        .field-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+        .field-group label { font-size: 12px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-muted); }
+        .field-group input, .field-group select { width: 100%; padding: 13px 16px; border: 1.5px solid rgba(31, 61, 43, 0.12); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 15px; background: var(--bg-nude); color: var(--forest-green); transition: all 0.25s ease; outline: none; }
+        .field-group input::placeholder { color: var(--text-muted); }
+        .field-group input:focus { border-color: var(--forest-green); background: var(--white); box-shadow: 0 2px 12px rgba(31, 61, 43, 0.07); }
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        .order-summary-item { display: flex; justify-content: space-between; padding: 10px 0; font-size: 14px; border-bottom: 1px solid rgba(31,61,43,0.06); }
+        .order-summary-item:last-of-type { border-bottom: none; }
+        .order-summary-item .item-name { flex: 1; }
+        .order-summary-item .item-qty { color: var(--text-muted); margin: 0 12px; }
+        .order-total { display: flex; justify-content: space-between; border-top: 1.5px solid rgba(31,61,43,0.1); padding-top: 16px; margin-top: 12px; font-size: 18px; font-weight: 600; }
+
+        .btn-pay { display: block; width: 100%; background: var(--forest-green); color: var(--bg-nude); padding: 16px; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 20px; transition: all 0.3s ease; }
+        .btn-pay:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(31, 61, 43, 0.18); }
+        .btn-pay:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        .error-msg { color: #c0392b; font-size: 13px; margin-top: 8px; display: none; }
+        .success-msg { text-align: center; padding: 60px 20px; }
+        .success-msg h2 { font-size: 36px; margin-bottom: 12px; }
+        .success-msg p { color: var(--text-muted); margin-bottom: 24px; }
+        .success-msg a { display: inline-block; background: var(--forest-green); color: var(--bg-nude); padding: 14px 36px; border-radius: 12px; text-decoration: none; font-weight: 600; }
+
+        .footer { background: var(--forest-green); color: var(--bg-nude); padding: 40px 20px; text-align: center; }
+        .footer-inner { max-width: 620px; margin: 0 auto; }
+        .footer-logo-text { font-family: 'Crimson Pro', serif; font-size: 20px; font-weight: 300; margin-bottom: 12px; }
+        .footer-mini-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 20px; }
+        .footer-mini-links a { color: rgba(239,230,221,0.7); text-decoration: none; font-size: 13px; transition: color 0.3s; }
+        .footer-mini-links a:hover { color: var(--soft-blush); }
+        .footer-copy { font-size: 12px; color: rgba(239,230,221,0.45); }
+
+        @media (max-width: 500px) { .field-row { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="announcement-bar">
+        <div class="announcement-track">
+            <span class="announcement-item">Directly Imported Korean Skincare</span><span class="announcement-separator"></span>
+            <span class="announcement-item">Authenticity Guaranteed</span><span class="announcement-separator"></span>
+            <span class="announcement-item">Ships from Cairo</span><span class="announcement-separator"></span>
+            <span class="announcement-item">Directly Imported Korean Skincare</span><span class="announcement-separator"></span>
+            <span class="announcement-item">Authenticity Guaranteed</span><span class="announcement-separator"></span>
+            <span class="announcement-item">Ships from Cairo</span><span class="announcement-separator"></span>
+        </div>
+    </div>
+
+    <header class="header">
+        <a href="cart.html" class="back-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            <span>Back to Bag</span>
+        </a>
+        <a href="index.html" class="logo">
+            <img src="beauvia-logo.png" alt="BEAUVIA&CO" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="logo-text" style="display:none;">BEAUVIA&CO</span>
+        </a>
+        <div style="width:24px;"></div>
+    </header>
+
+    <div class="page-hero">
+        <h1><em>Checkout</em></h1>
+    </div>
+
+    <div class="checkout-container" id="checkoutContainer">
+        <!-- Order Summary -->
+        <div class="checkout-section" id="orderSummary">
+            <h3>Order Summary</h3>
+            <div id="summaryItems"></div>
+            <div class="order-total" id="orderTotal"></div>
+        </div>
+
+        <!-- Customer Info -->
+        <form id="checkoutForm" class="checkout-section">
+            <h3>Delivery Information</h3>
+            <div class="field-group">
+                <label for="fullName">Full Name *</label>
+                <input type="text" id="fullName" placeholder="Your full name" required minlength="2" maxlength="100">
+            </div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" placeholder="01x xxxx xxxx" required pattern="[\d\s\+\-()]{7,20}">
+                </div>
+                <div class="field-group">
+                    <label for="email">Email (optional)</label>
+                    <input type="email" id="email" placeholder="your@email.com">
+                </div>
+            </div>
+            <div class="field-group">
+                <label for="address">Delivery Address *</label>
+                <input type="text" id="address" placeholder="Street, building, floor, apartment" required minlength="5" maxlength="500">
+            </div>
+            <div class="field-group">
+                <label for="city">City</label>
+                <input type="text" id="city" placeholder="Cairo" maxlength="100">
+            </div>
+
+            <p class="error-msg" id="errorMsg"></p>
+            <button type="submit" class="btn-pay" id="payBtn">Place Order & Pay</button>
+        </form>
+    </div>
+
+    <div class="checkout-container success-msg" id="successContainer" style="display:none;">
+        <h2>Order Confirmed!</h2>
+        <p id="successText">Your order has been placed successfully.</p>
+        <a href="index.html">Back to Home</a>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <p class="footer-logo-text">BEAUVIA&CO</p>
+            <div class="footer-mini-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#bestsellers">Shop</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <p class="footer-copy">&copy; 2024 BEAUVIA&CO. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function getCart() { try { return JSON.parse(localStorage.getItem('beauvia_cart')) || []; } catch { return []; } }
+        function escapeHtml(str) { if (!str) return ''; const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+
+        function renderSummary() {
+            const cart = getCart();
+            if (!cart.length) { window.location.href = 'cart.html'; return; }
+
+            const itemsEl = document.getElementById('summaryItems');
+            const totalEl = document.getElementById('orderTotal');
+            let total = 0;
+
+            itemsEl.innerHTML = cart.map(item => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+                return `<div class="order-summary-item">
+                    <span class="item-name">${escapeHtml(item.name)}</span>
+                    <span class="item-qty">x${item.quantity}</span>
+                    <span>${subtotal.toLocaleString()} EGP</span>
+                </div>`;
+            }).join('');
+
+            totalEl.innerHTML = `<span>Total</span><span>${total.toLocaleString()} EGP</span>`;
+        }
+
+        function showError(msg) {
+            const el = document.getElementById('errorMsg');
+            el.textContent = msg;
+            el.style.display = 'block';
+        }
+
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const errorEl = document.getElementById('errorMsg');
+            errorEl.style.display = 'none';
+            const btn = document.getElementById('payBtn');
+            btn.disabled = true;
+            btn.textContent = 'Processing...';
+
+            const cart = getCart();
+            if (!cart.length) { window.location.href = 'cart.html'; return; }
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const city = document.getElementById('city').value.trim();
+
+            // Client-side validation
+            if (fullName.length < 2) { showError('Please enter your full name.'); btn.disabled = false; btn.textContent = 'Place Order & Pay'; return; }
+            if (!/^[\d\s\+\-()]{7,20}$/.test(phone)) { showError('Please enter a valid phone number.'); btn.disabled = false; btn.textContent = 'Place Order & Pay'; return; }
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email.'); btn.disabled = false; btn.textContent = 'Place Order & Pay'; return; }
+            if (address.length < 5) { showError('Please enter your delivery address.'); btn.disabled = false; btn.textContent = 'Place Order & Pay'; return; }
+
+            try {
+                // Step 1: Create order
+                const orderRes = await fetch('/api/orders', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customer_name: fullName,
+                        customer_email: email || undefined,
+                        customer_phone: phone,
+                        address: address,
+                        city: city || 'Cairo',
+                        items: cart.map(i => ({ product_id: i.product_id, quantity: i.quantity }))
+                    })
+                });
+
+                const orderData = await orderRes.json();
+                if (!orderRes.ok) {
+                    showError(orderData.errors ? orderData.errors.join(' ') : orderData.error || 'Could not place order.');
+                    btn.disabled = false; btn.textContent = 'Place Order & Pay'; return;
+                }
+
+                // Step 2: Initiate Paymob payment
+                const payRes = await fetch('/api/paymob/pay', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ order_id: orderData.order.id })
+                });
+
+                const payData = await payRes.json();
+                if (payRes.ok && payData.payment_url) {
+                    // Clear cart and redirect to Paymob
+                    localStorage.removeItem('beauvia_cart');
+                    window.location.href = payData.payment_url;
+                    return;
+                }
+
+                // If Paymob is not configured, show success without payment
+                localStorage.removeItem('beauvia_cart');
+                document.getElementById('checkoutContainer').style.display = 'none';
+                document.querySelector('.page-hero').style.display = 'none';
+                const successEl = document.getElementById('successContainer');
+                successEl.style.display = 'block';
+                document.getElementById('successText').textContent =
+                    'Order #' + orderData.order.id + ' has been placed. Total: ' + Number(orderData.order.total).toLocaleString() + ' EGP. We will contact you for payment details.';
+            } catch (err) {
+                showError('Something went wrong. Please try again.');
+                btn.disabled = false; btn.textContent = 'Place Order & Pay';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', renderSummary);
+        window.addEventListener('scroll', () => { document.querySelector('.header').classList.toggle('scrolled', window.pageYOffset > 50); });
+    </script>
+</body>
+</html>
