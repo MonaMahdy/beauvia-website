@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BEAUVIA&CO - Korean Skincare Boutique</title>
+    <title>BEAUVIA&CO — Authentic Korean Skincare in Egypt | Imported from Seoul</title>
+    <meta name="description" content="Shop authentic Korean skincare imported directly from Seoul. Hydrating toners, barrier creams, centella serums and more — delivered across Egypt.">
+    <meta property="og:title" content="BEAUVIA&CO — Authentic Korean Skincare in Egypt">
+    <meta property="og:description" content="Hydration-first Korean skincare imported directly from Seoul. Shop toners, serums, creams and more.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/beauvia-logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -86,10 +91,16 @@
         .logo img { height: 65px; width: auto; display: block; }
         .logo-text { font-family: 'Crimson Pro', serif; font-size: 24px; font-weight: 400; letter-spacing: 0.5px; }
 
-        .menu-icon, .cart-icon {
+        .menu-icon {
+            width: 24px; height: 24px; cursor: pointer; z-index: 10;
+            stroke: var(--forest-green); transition: opacity 0.3s ease;
+            padding: 10px; box-sizing: content-box;
+        }
+        .cart-icon {
             width: 24px; height: 24px; cursor: pointer; z-index: 10;
             stroke: var(--forest-green); transition: opacity 0.3s ease;
         }
+        .cart-wrapper { padding: 10px; box-sizing: content-box; }
         .menu-icon:hover, .cart-icon:hover { opacity: 0.6; }
 
         /* ── Full-Screen Mobile Menu ── */
@@ -622,6 +633,55 @@
             font-size: 13px; color: rgba(239, 230, 221, 0.7);
         }
 
+        /* Trust Bar */
+        .trust-bar {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
+            background: var(--white); border-bottom: 1px solid rgba(31,61,43,0.06);
+        }
+        .trust-item {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 18px 12px; font-size: 12px; font-weight: 600; letter-spacing: 0.4px;
+            color: var(--forest-green); text-align: center; border-right: 1px solid rgba(31,61,43,0.06);
+            border-bottom: 1px solid rgba(31,61,43,0.06);
+        }
+        .trust-item:last-child { border-right: none; }
+        .trust-item svg { width: 18px; height: 18px; stroke: var(--soft-blush); flex-shrink: 0; }
+        @media (min-width: 768px) {
+            .trust-bar { grid-template-columns: repeat(4, 1fr); }
+            .trust-item { border-bottom: none; }
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: var(--forest-green); padding: 64px 20px; text-align: center;
+        }
+        .cta-banner h2 { font-size: clamp(28px, 5vw, 40px); color: var(--bg-nude); margin-bottom: 14px; font-weight: 300; }
+        .cta-banner p { font-size: 15px; color: rgba(239,230,221,0.7); max-width: 420px; margin: 0 auto 28px; }
+        .cta-banner .btn-primary { background: var(--soft-blush); color: var(--forest-green); }
+        .cta-banner .btn-primary:hover { box-shadow: 0 6px 24px rgba(216,183,166,0.3), 0 0 0 2px rgba(239,230,221,0.3); }
+
+        /* Cart Toast */
+        .cart-toast {
+            position: fixed; bottom: 24px; right: 24px; background: var(--forest-green);
+            color: var(--bg-nude); padding: 14px 20px; border-radius: 12px; font-size: 14px;
+            font-weight: 500; box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 9999;
+            transform: translateY(100px); opacity: 0; transition: all 0.35s ease;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .cart-toast.show { transform: translateY(0); opacity: 1; }
+        .cart-toast a {
+            color: var(--soft-blush); text-decoration: none; font-weight: 600;
+            white-space: nowrap; transition: opacity 0.2s;
+        }
+        .cart-toast a:hover { opacity: 0.8; }
+
+        /* Authenticity Strip */
+        .authenticity-strip {
+            text-align: center; padding: 28px 20px; font-size: 14px;
+            color: rgba(31,61,43,0.6); line-height: 1.7; font-style: italic;
+            max-width: 700px; margin: 0 auto;
+        }
+
         /* Animations */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -658,23 +718,23 @@
 
     <div class="announcement-bar">
         <div class="announcement-track">
-            <span class="announcement-item">Directly Imported Korean Skincare</span>
+            <span class="announcement-item">100% Authentic Korean Skincare — Imported Directly from Seoul</span>
             <span class="announcement-separator"></span>
-            <span class="announcement-item">Authenticity Guaranteed</span>
+            <span class="announcement-item">Free Shipping on Orders Over 1,000 EGP</span>
             <span class="announcement-separator"></span>
-            <span class="announcement-item">Ships from Cairo</span>
+            <span class="announcement-item">Trusted by Skincare Lovers Across Egypt</span>
             <span class="announcement-separator"></span>
-            <span class="announcement-item">Directly Imported Korean Skincare</span>
+            <span class="announcement-item">100% Authentic Korean Skincare — Imported Directly from Seoul</span>
             <span class="announcement-separator"></span>
-            <span class="announcement-item">Authenticity Guaranteed</span>
+            <span class="announcement-item">Free Shipping on Orders Over 1,000 EGP</span>
             <span class="announcement-separator"></span>
-            <span class="announcement-item">Ships from Cairo</span>
+            <span class="announcement-item">Trusted by Skincare Lovers Across Egypt</span>
             <span class="announcement-separator"></span>
         </div>
     </div>
 
     <header class="header">
-        <svg class="menu-icon" onclick="toggleMenu()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg class="menu-icon" onclick="toggleMenu()" aria-label="Open menu" role="button" tabindex="0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -705,38 +765,67 @@
             <div>
                 <!-- Primary links -->
                 <ul>
-                    <li><a href="index.html"      onclick="toggleMenu()">Home</a></li>
+                    <li><a href="#bestsellers"     onclick="toggleMenu()">Shop All</a></li>
                     <li><a href="#routines"        onclick="toggleMenu()">Routines</a></li>
-                    <li><a href="#bestsellers"     onclick="toggleMenu()">Best Sellers</a></li>
-                    <li><a href="#ingredients"     onclick="toggleMenu()">Ingredients</a></li>
+                    <li><a href="#ingredients"     onclick="toggleMenu()">Our Ingredients</a></li>
+                    <li><a href="contact.html"     onclick="toggleMenu()">Contact</a></li>
                     <li><hr class="nav-divider"></li>
-                    <li class="nav-contact-link"><a href="contact.html" onclick="toggleMenu()">Contact Us →</a></li>
+                    <li class="nav-contact-link"><a href="cart.html" onclick="toggleMenu()">Your Bag <span id="navCartCount"></span> →</a></li>
                 </ul>
 
                 <!-- Shop All outline button -->
                 <a href="#bestsellers" class="nav-shop-all" onclick="toggleMenu()">
-                    Shop All
+                    Browse Products
                     <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
             </div>
 
             <!-- Brand tagline -->
             <div class="nav-tagline">
-                <p>KOREAN SKINCARE &middot; DIRECTLY IMPORTED &middot; CAIRO</p>
+                <p>AUTHENTIC KOREAN SKINCARE &middot; IMPORTED FROM SEOUL &middot; CAIRO</p>
             </div>
 
         </div>
     </nav>
 
+    <main>
     <section class="hero">
-        <h1>Healthy Skin Starts<br>With a Strong Barrier</h1>
-        <p>Hydration-first Korean skincare for modern girls.</p>
-        <a href="#bestsellers" class="btn-primary">Start Your Routine</a>
+        <h1>Your Skin Deserves<br>Seoul's Best-Kept Secrets</h1>
+        <p>Authentic Korean formulas that transform your skin barrier — now in Cairo.</p>
+        <a href="#bestsellers" class="btn-primary">Shop Best Sellers</a>
     </section>
 
-    <section class="split-sections">
+    <!-- Trust Bar -->
+    <div class="trust-bar">
+        <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            100% Authentic
+        </div>
+        <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            Ships Nationwide
+        </div>
+        <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Secure Payment
+        </div>
+        <div class="trust-item" style="border-right:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Satisfaction Guaranteed
+        </div>
+    </div>
 
-        <!-- Hydrate -->
+    <!-- Best Sellers (moved up for earlier product visibility) -->
+    <section class="best-sellers" id="bestsellers">
+        <h2 class="section-title">Best Sellers</h2>
+        <div class="products-grid" id="productsGrid">
+            <p style="text-align:center; grid-column:1/-1; padding:40px; color:rgba(31,61,43,0.5);">Loading products...</p>
+        </div>
+        <p class="authenticity-strip">"Every product is sourced directly from trusted Korean manufacturers. No middlemen, no counterfeits — just the real thing, sealed and certified."</p>
+    </section>
+
+    <!-- Editorial Split Sections -->
+    <section class="split-sections">
         <div class="split-row">
             <div class="split-image hydrate">
                 <div class="split-image-fill"></div>
@@ -745,17 +834,16 @@
             <div class="split-text">
                 <div class="split-text-inner">
                     <p class="split-number">01 — Hydrate</p>
-                    <h3>Quench<br>every layer.</h3>
-                    <p>Multi-weight hyaluronic acid that reaches deep — leaving skin plump, bouncy, and balanced.</p>
+                    <h2 style="font-size:inherit;line-height:inherit;letter-spacing:inherit;font-weight:inherit;margin-bottom:inherit;">Quench<br>every layer.</h2>
+                    <p>Seven types of hyaluronic acid, each a different molecular weight, penetrating every layer — from surface to deep dermis. The result: plump, bouncy skin that holds moisture all day.</p>
                     <a href="#bestsellers" class="split-explore">
-                        Explore
+                        Shop Hydration
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- Repair -->
         <div class="split-row reverse">
             <div class="split-image repair">
                 <div class="split-image-fill"></div>
@@ -764,100 +852,99 @@
             <div class="split-text">
                 <div class="split-text-inner">
                     <p class="split-number">02 — Repair</p>
-                    <h3>Rebuild<br>your barrier.</h3>
-                    <p>Ceramide-rich formulas that restore strength, seal in moisture, and protect daily.</p>
+                    <h2 style="font-size:inherit;line-height:inherit;letter-spacing:inherit;font-weight:inherit;margin-bottom:inherit;">Rebuild<br>your barrier.</h2>
+                    <p>Your barrier is your skin's shield. Our ceramide formulas rebuild what's damaged, lock in everything your skin needs, and keep irritants out — day and night.</p>
                     <a href="#bestsellers" class="split-explore">
-                        Explore
+                        Shop Repair
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- Calm -->
         <div class="split-row">
             <div class="split-image calm">
                 <div class="split-image-fill"></div>
-                <span class="split-image-label">Soothe & Calm</span>
+                <span class="split-image-label">Soothe &amp; Calm</span>
             </div>
             <div class="split-text">
                 <div class="split-text-inner">
                     <p class="split-number">03 — Calm</p>
-                    <h3>Soothe<br>the sensitive.</h3>
-                    <p>Centella asiatica and botanical actives that quiet redness and reduce irritation gently.</p>
+                    <h2 style="font-size:inherit;line-height:inherit;letter-spacing:inherit;font-weight:inherit;margin-bottom:inherit;">Soothe<br>the sensitive.</h2>
+                    <p>For skin that overreacts to everything. Centella asiatica and botanical actives work together to calm redness, ease irritation, and bring your skin back to neutral.</p>
                     <a href="#bestsellers" class="split-explore">
-                        Explore
+                        Shop Calming
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </a>
                 </div>
             </div>
         </div>
-
     </section>
 
+    <!-- Routines -->
     <section class="featured-routines" id="routines">
-        <h2 class="section-title">Featured Routines</h2>
+        <h2 class="section-title">Curated Routines</h2>
         <div class="routines-grid">
             <div class="routine-card">
-                <div class="routine-image">💧</div>
+                <div class="routine-image">\uD83D\uDCA7</div>
                 <div class="routine-content">
                     <h3>Dry Skin Reset</h3>
-                    <p>A complete hydration routine for parched, tight skin that needs serious moisture.</p>
-                    <div class="routine-products">3 Products • Complete Routine</div>
-                    <a href="#" class="btn-secondary">View Routine</a>
+                    <p>A complete hydration routine for parched, tight skin that needs serious moisture replenishment.</p>
+                    <div class="routine-products">3 Products &bull; Complete Routine</div>
+                    <a href="#bestsellers" class="btn-secondary">Shop This Routine</a>
                 </div>
             </div>
             <div class="routine-card">
-                <div class="routine-image">🛡</div>
+                <div class="routine-image">\uD83D\uDEE1</div>
                 <div class="routine-content">
                     <h3>Barrier Repair Kit</h3>
                     <p>Rebuild compromised skin with ceramides and gentle barrier-supporting actives.</p>
-                    <div class="routine-products">4 Products • Complete Routine</div>
-                    <a href="#" class="btn-secondary">View Routine</a>
+                    <div class="routine-products">4 Products &bull; Complete Routine</div>
+                    <a href="#bestsellers" class="btn-secondary">Shop This Routine</a>
                 </div>
             </div>
             <div class="routine-card">
-                <div class="routine-image">✨</div>
+                <div class="routine-image">\u2728</div>
                 <div class="routine-content">
-                    <h3>Glass Skin Hydration</h3>
-                    <p>Achieve that luminous, dewy glass skin glow with layered hydration.</p>
-                    <div class="routine-products">5 Products • Complete Routine</div>
-                    <a href="#" class="btn-secondary">View Routine</a>
+                    <h3>Glass Skin Glow</h3>
+                    <p>Achieve that luminous, dewy glass skin look with layered hydration and brightening actives.</p>
+                    <div class="routine-products">5 Products &bull; Complete Routine</div>
+                    <a href="#bestsellers" class="btn-secondary">Shop This Routine</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="best-sellers" id="bestsellers">
-        <h2 class="section-title">Best Sellers</h2>
-        <div class="products-grid" id="productsGrid">
-            <!-- Products loaded dynamically from API -->
-            <p style="text-align:center; grid-column:1/-1; padding:40px; color:rgba(31,61,43,0.5);">Loading products...</p>
-        </div>
-    </section>
-
+    <!-- Ingredients -->
     <section class="ingredient-library" id="ingredients">
-        <h2 class="section-title">Ingredient Library</h2>
+        <h2 class="section-title">The Science Behind Your Glow</h2>
         <p style="text-align: center; max-width: 600px; margin: 0 auto 30px; color: rgba(31, 61, 43, 0.7);">
-            Understanding what goes into your skin is essential. Here's what makes our formulas work.
+            Every ingredient is chosen for a reason. Here's what makes our Korean formulas actually work.
         </p>
         <div class="ingredients-grid">
-            <div class="ingredient-card">
+            <article class="ingredient-card">
                 <h3>Hyaluronic Acid</h3>
-                <p>A moisture magnet that can hold up to 1000x its weight in water. We use multiple molecular weights to hydrate every layer of your skin—from surface to deep dermis. Perfect for plumping fine lines and creating that dewy, bouncy texture.</p>
-            </div>
-            <div class="ingredient-card">
+                <p>A moisture magnet that can hold up to 1000x its weight in water. We use multiple molecular weights to hydrate every layer of your skin — from surface to deep dermis. Perfect for plumping fine lines and creating that dewy, bouncy texture.</p>
+            </article>
+            <article class="ingredient-card">
                 <h3>Ceramides</h3>
                 <p>The building blocks of your skin barrier. These lipids naturally exist in skin but decrease with age and damage. Our ceramide complex (NP, AP, EOP) mimics your natural barrier to lock in moisture and protect against environmental stress.</p>
-            </div>
-            <div class="ingredient-card">
+            </article>
+            <article class="ingredient-card">
                 <h3>Centella Asiatica</h3>
                 <p>Also known as cica or tiger grass, this Korean skincare staple has been used for centuries to heal wounds. Rich in madecassoside and asiaticoside, it calms inflammation, reduces redness, and supports skin repair.</p>
-            </div>
+            </article>
         </div>
     </section>
 
-    <!-- Footer — Minimal Contact Info Only -->
+    <!-- Pre-Footer CTA -->
+    <section class="cta-banner">
+        <h2>Ready to Transform Your Routine?</h2>
+        <p>Join thousands of skincare lovers across Egypt who trust BEAUVIA&amp;CO for authentic Korean skincare.</p>
+        <a href="#bestsellers" class="btn-primary" style="opacity:1;animation:none;">Shop Best Sellers</a>
+    </section>
+    </main>
+
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-grid">
@@ -866,11 +953,11 @@
                         <img src="beauvia-logo.png" alt="BEAUVIA&CO" onerror="this.style.display='none'">
                     </div>
                     <p style="font-size: 14px; line-height: 1.7; color: rgba(239, 230, 221, 0.8);">
-                        Directly imported Korean skincare focused on hydration and barrier health. Authentic products for modern girls.
+                        Authentic Korean skincare imported directly from Seoul. Hydration-first formulas for skin that glows from within.
                     </p>
                     <div class="social-links">
-                        <a href="https://instagram.com/beauvia" target="_blank">📷</a>
-                        <a href="https://facebook.com/beauvia" target="_blank">📱</a>
+                        <a href="https://instagram.com/beauviaco" target="_blank" aria-label="Instagram">📷</a>
+                        <a href="https://facebook.com/beauviaco" target="_blank" aria-label="Facebook">📱</a>
                     </div>
                 </div>
 
@@ -880,17 +967,16 @@
                         <li><a href="#bestsellers">Best Sellers</a></li>
                         <li><a href="#routines">Routines</a></li>
                         <li><a href="#ingredients">Ingredients</a></li>
-                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="cart.html">Your Bag</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-column">
-                    <h4>Information</h4>
+                    <h4>Help</h4>
                     <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Authenticity Guarantee</a></li>
-                        <li><a href="#">Shipping & Returns</a></li>
-                        <li><a href="#">How to Choose</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="contact.html">Shipping &amp; Delivery</a></li>
+                        <li><a href="contact.html">Authenticity Guarantee</a></li>
                     </ul>
                 </div>
 
@@ -915,10 +1001,16 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2024 BEAUVIA&CO. All rights reserved. Directly Imported Korean Skincare.</p>
+                <p>&copy; 2025 BEAUVIA&amp;CO. All rights reserved. Authentic Korean Skincare — Imported from Seoul.</p>
             </div>
         </div>
     </footer>
+
+    <!-- Cart Toast -->
+    <div class="cart-toast" id="cartToast">
+        <span id="toastText"></span>
+        <a href="cart.html">View Bag</a>
+    </div>
 
     <script>
         // ── Cart (localStorage) ──
@@ -932,6 +1024,8 @@
             const count = cart.reduce((s, i) => s + i.quantity, 0);
             const badge = document.getElementById('cartCount');
             if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'block' : 'none'; }
+            const navCount = document.getElementById('navCartCount');
+            if (navCount) { navCount.textContent = count > 0 ? '(' + count + ')' : ''; }
         }
         function addToCart(id, name, price, image) {
             const cart = getCart();
@@ -943,6 +1037,18 @@
             updateCartBadge();
         }
 
+        // ── Toast notification ──
+        function showCartToast(name) {
+            const toast = document.getElementById('cartToast');
+            document.getElementById('toastText').textContent = name + ' added to your bag';
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        // ── Category labels ──
+        const categoryLabels = { hydrate: 'Hydration', repair: 'Repair', calm: 'Calming', glow: 'Glow' };
+
         // ── Load products from API ──
         async function loadProducts() {
             const grid = document.getElementById('productsGrid');
@@ -951,21 +1057,21 @@
                 const products = await res.json();
                 if (!products.length) { grid.innerHTML = '<p style="text-align:center;grid-column:1/-1;padding:40px;color:rgba(31,61,43,0.5);">No products available.</p>'; return; }
                 grid.innerHTML = products.map(p => `
-                    <div class="product-card">
+                    <article class="product-card">
                         <div class="product-image">
                             <div class="product-badge">${escapeHtml(p.badge || 'DIRECTLY IMPORTED')}</div>
                             <div class="product-tag">${escapeHtml(p.tag)}</div>
                             ${p.image ? `<img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" style="width:100%;height:100%;object-fit:cover;">` : '<div class="product-placeholder">\uD83E\uDDF4</div>'}
                         </div>
                         <div class="product-info">
+                            ${p.category ? `<span style="font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--soft-blush);">${escapeHtml(categoryLabels[p.category] || p.category)}</span>` : ''}
                             <h3 class="product-name">${escapeHtml(p.name)}</h3>
                             <div class="product-price">${Number(p.price).toLocaleString()} EGP</div>
                             <p class="product-description">${escapeHtml(p.description)}</p>
                             <button class="btn-add-to-bag" onclick="handleAddToBag(this, ${p.id}, '${escapeHtml(p.name).replace(/'/g, "\\'")}', ${p.price}, '${escapeHtml(p.image || '')}')">Add to Bag</button>
                         </div>
-                    </div>
+                    </article>
                 `).join('');
-                // Re-observe for animations
                 document.querySelectorAll('.product-card').forEach(el => observer.observe(el));
             } catch (err) {
                 grid.innerHTML = '<p style="text-align:center;grid-column:1/-1;padding:40px;color:#d32f2f;">Could not load products.</p>';
@@ -974,7 +1080,8 @@
 
         function handleAddToBag(btn, id, name, price, image) {
             addToCart(id, name, price, image);
-            btn.textContent = '\u2713 Added to Bag';
+            showCartToast(name);
+            btn.textContent = '\u2713 Added';
             btn.style.background = 'var(--soft-blush)';
             setTimeout(() => { btn.textContent = 'Add to Bag'; btn.style.background = 'var(--forest-green)'; }, 2000);
         }
@@ -992,6 +1099,7 @@
             menu.classList.toggle('active');
             header.classList.toggle('menu-open', isOpening);
             document.body.style.overflow = isOpening ? 'hidden' : '';
+            if (isOpening) updateCartBadge();
         }
 
         // ── Scroll animations ──

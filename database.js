@@ -89,12 +89,12 @@ function initDatabase() {
 
 function seedProducts(db) {
     const products = [
-        { name: 'Hydrating Toner', price: 450, description: 'Multi-layer hydration with 7 types of hyaluronic acid. Plumps and prepares skin for serums.', category: 'hydrate', tag: '\u{1F4A7}', badge: 'DIRECTLY IMPORTED' },
-        { name: 'Barrier Cream', price: 620, description: 'Rich ceramide complex strengthens skin barrier. Locks in moisture without heaviness.', category: 'repair', tag: '\u{1F6E1}', badge: 'DIRECTLY IMPORTED' },
-        { name: 'Centella Serum', price: 580, description: 'Pure centella extract calms irritation and redness. Perfect for sensitive or stressed skin.', category: 'calm', tag: '\u{1F33F}', badge: 'DIRECTLY IMPORTED' },
-        { name: 'Essence Mist', price: 380, description: 'Lightweight hydrating mist for instant refreshment. Layer or use throughout the day.', category: 'hydrate', tag: '\u{1F4A7}', badge: 'DIRECTLY IMPORTED' },
-        { name: 'Glass Skin Serum', price: 690, description: 'Luminous glow serum with niacinamide and fermented extracts. Brightens and evens texture.', category: 'glow', tag: '\u{2728}', badge: 'DIRECTLY IMPORTED' },
-        { name: 'Night Repair Mask', price: 520, description: 'Overnight treatment repairs while you sleep. Wake up to softer, smoother skin.', category: 'repair', tag: '\u{1F6E1}', badge: 'DIRECTLY IMPORTED' }
+        { name: 'Hydrating Toner', price: 450, description: 'Instantly plumps and preps your skin with 7 types of hyaluronic acid \u2014 each penetrating a different layer for deep, lasting hydration.', category: 'hydrate', tag: '\u{1F4A7}', badge: 'BEST SELLER' },
+        { name: 'Barrier Cream', price: 620, description: 'Seals and shields your barrier with a triple ceramide complex. Rich enough to repair, light enough for every day.', category: 'repair', tag: '\u{1F6E1}', badge: 'DIRECTLY IMPORTED' },
+        { name: 'Centella Serum', price: 580, description: 'Your rescue serum for stressed, reactive skin. Pure centella extract calms redness on contact and strengthens over time.', category: 'calm', tag: '\u{1F33F}', badge: 'STAFF PICK' },
+        { name: 'Essence Mist', price: 380, description: 'A burst of hydration whenever you need it. Mist over makeup, layer into your routine, or refresh on the go.', category: 'hydrate', tag: '\u{1F4A7}', badge: 'DIRECTLY IMPORTED' },
+        { name: 'Glass Skin Serum', price: 690, description: 'The glass skin effect, bottled. Niacinamide and fermented extracts brighten, refine texture, and give you that lit-from-within glow.', category: 'glow', tag: '\u{2728}', badge: 'BEST SELLER' },
+        { name: 'Night Repair Mask', price: 520, description: 'Let your skin heal itself overnight. This sleeping mask delivers deep repair so you wake up to visibly softer, smoother skin.', category: 'repair', tag: '\u{1F6E1}', badge: 'NEW ARRIVAL' }
     ];
 
     const stmt = db.prepare('INSERT INTO products (name, price, description, category, tag, badge) VALUES (?, ?, ?, ?, ?, ?)');

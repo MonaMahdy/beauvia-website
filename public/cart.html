@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Bag — BEAUVIA&CO</title>
+    <title>Your Shopping Bag — BEAUVIA&CO</title>
+    <meta name="description" content="Review your BEAUVIA&CO shopping bag. Authentic Korean skincare products with secure checkout and nationwide delivery.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -83,17 +84,17 @@
 <body>
     <div class="announcement-bar">
         <div class="announcement-track">
-            <span class="announcement-item">Directly Imported Korean Skincare</span>
+            <span class="announcement-item">100% Authentic Korean Skincare — Imported Directly from Seoul</span>
             <span class="announcement-separator"></span>
-            <span class="announcement-item">Authenticity Guaranteed</span>
+            <span class="announcement-item">Free Shipping on Orders Over 1,000 EGP</span>
             <span class="announcement-separator"></span>
-            <span class="announcement-item">Ships from Cairo</span>
+            <span class="announcement-item">Trusted by Skincare Lovers Across Egypt</span>
             <span class="announcement-separator"></span>
-            <span class="announcement-item">Directly Imported Korean Skincare</span>
+            <span class="announcement-item">100% Authentic Korean Skincare — Imported Directly from Seoul</span>
             <span class="announcement-separator"></span>
-            <span class="announcement-item">Authenticity Guaranteed</span>
+            <span class="announcement-item">Free Shipping on Orders Over 1,000 EGP</span>
             <span class="announcement-separator"></span>
-            <span class="announcement-item">Ships from Cairo</span>
+            <span class="announcement-item">Trusted by Skincare Lovers Across Egypt</span>
             <span class="announcement-separator"></span>
         </div>
     </div>
@@ -127,7 +128,7 @@
                 <a href="index.html#bestsellers">Shop</a>
                 <a href="contact.html">Contact</a>
             </div>
-            <p class="footer-copy">&copy; 2024 BEAUVIA&CO. All rights reserved.</p>
+            <p class="footer-copy">&copy; 2025 BEAUVIA&amp;CO. All rights reserved.</p>
         </div>
     </footer>
 
@@ -142,8 +143,8 @@
             const subtitle = document.getElementById('cartSubtitle');
 
             if (!cart.length) {
-                subtitle.textContent = 'Your bag is empty';
-                container.innerHTML = `<div class="cart-empty"><p>You haven't added any products yet.</p><a href="index.html#bestsellers">Browse Products</a></div>`;
+                subtitle.textContent = 'Your bag is waiting';
+                container.innerHTML = `<div class="cart-empty"><p>Browse our best sellers and find your new favorites.</p><a href="index.html#bestsellers">Shop Best Sellers</a></div>`;
                 return;
             }
 
@@ -168,12 +169,22 @@
                 </div>`;
             });
 
+            const FREE_SHIPPING = 1000;
+            const shippingMsg = totalPrice >= FREE_SHIPPING
+                ? '<span style="color:#27ae60;font-weight:600;">Free</span>'
+                : '<span style="color:var(--text-muted);">Calculated at checkout</span>';
+            const thresholdMsg = totalPrice < FREE_SHIPPING
+                ? `<div style="text-align:center;padding:14px;margin-top:12px;background:rgba(31,61,43,0.03);border-radius:10px;font-size:13px;color:var(--text-muted);">Add <strong style="color:var(--forest-green);">${(FREE_SHIPPING - totalPrice).toLocaleString()} EGP</strong> more for free shipping</div>`
+                : '';
+
             html += `<div class="cart-summary">
                 <div class="cart-summary-row"><span>Subtotal</span><span>${totalPrice.toLocaleString()} EGP</span></div>
-                <div class="cart-summary-row"><span>Shipping</span><span style="color:var(--text-muted);">Calculated at checkout</span></div>
+                <div class="cart-summary-row"><span>Shipping</span>${shippingMsg}</div>
                 <div class="cart-summary-row total"><span>Total</span><span>${totalPrice.toLocaleString()} EGP</span></div>
+                ${thresholdMsg}
             </div>
             <a href="checkout.html" class="btn-checkout">Proceed to Checkout</a>
+            <p style="text-align:center;margin-top:14px;font-size:12px;color:var(--text-muted);">Secure payment via Paymob &bull; Ships within 2-3 business days</p>
             <a href="index.html#bestsellers" class="btn-continue">Continue Shopping</a>`;
 
             container.innerHTML = html;

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout — BEAUVIA&CO</title>
+    <title>Secure Checkout — BEAUVIA&CO</title>
+    <meta name="description" content="Complete your BEAUVIA&CO order. Secure payment via Paymob with delivery across Egypt.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -81,12 +82,12 @@
 <body>
     <div class="announcement-bar">
         <div class="announcement-track">
-            <span class="announcement-item">Directly Imported Korean Skincare</span><span class="announcement-separator"></span>
-            <span class="announcement-item">Authenticity Guaranteed</span><span class="announcement-separator"></span>
-            <span class="announcement-item">Ships from Cairo</span><span class="announcement-separator"></span>
-            <span class="announcement-item">Directly Imported Korean Skincare</span><span class="announcement-separator"></span>
-            <span class="announcement-item">Authenticity Guaranteed</span><span class="announcement-separator"></span>
-            <span class="announcement-item">Ships from Cairo</span><span class="announcement-separator"></span>
+            <span class="announcement-item">100% Authentic Korean Skincare — Imported Directly from Seoul</span><span class="announcement-separator"></span>
+            <span class="announcement-item">Free Shipping on Orders Over 1,000 EGP</span><span class="announcement-separator"></span>
+            <span class="announcement-item">Trusted by Skincare Lovers Across Egypt</span><span class="announcement-separator"></span>
+            <span class="announcement-item">100% Authentic Korean Skincare — Imported Directly from Seoul</span><span class="announcement-separator"></span>
+            <span class="announcement-item">Free Shipping on Orders Over 1,000 EGP</span><span class="announcement-separator"></span>
+            <span class="announcement-item">Trusted by Skincare Lovers Across Egypt</span><span class="announcement-separator"></span>
         </div>
     </div>
 
@@ -118,37 +119,44 @@
         <form id="checkoutForm" class="checkout-section">
             <h3>Delivery Information</h3>
             <div class="field-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" placeholder="01x xxxx xxxx" required pattern="[\d\s\+\-()]{7,20}">
+            </div>
+            <div class="field-group">
                 <label for="fullName">Full Name *</label>
                 <input type="text" id="fullName" placeholder="Your full name" required minlength="2" maxlength="100">
             </div>
-            <div class="field-row">
-                <div class="field-group">
-                    <label for="phone">Phone Number *</label>
-                    <input type="tel" id="phone" placeholder="01x xxxx xxxx" required pattern="[\d\s\+\-()]{7,20}">
-                </div>
-                <div class="field-group">
-                    <label for="email">Email (optional)</label>
-                    <input type="email" id="email" placeholder="your@email.com">
-                </div>
+            <div class="field-group">
+                <label for="email">Email (optional)</label>
+                <input type="email" id="email" placeholder="your@email.com">
             </div>
             <div class="field-group">
                 <label for="address">Delivery Address *</label>
                 <input type="text" id="address" placeholder="Street, building, floor, apartment" required minlength="5" maxlength="500">
             </div>
-            <div class="field-group">
-                <label for="city">City</label>
-                <input type="text" id="city" placeholder="Cairo" maxlength="100">
+            <div class="field-row">
+                <div class="field-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" placeholder="Cairo" maxlength="100">
+                </div>
+                <div class="field-group" style="align-items:center;justify-content:flex-end;flex-direction:row;gap:6px;padding-top:20px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--soft-blush)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span style="font-size:12px;color:var(--text-muted);">Secure &amp; encrypted</span>
+                </div>
             </div>
 
             <p class="error-msg" id="errorMsg"></p>
-            <button type="submit" class="btn-pay" id="payBtn">Place Order & Pay</button>
+            <button type="submit" class="btn-pay" id="payBtn">Place Order &amp; Pay</button>
+            <p style="text-align:center;margin-top:12px;font-size:12px;color:var(--text-muted);">Secure payment via Paymob &bull; Your data is encrypted</p>
         </form>
     </div>
 
     <div class="checkout-container success-msg" id="successContainer" style="display:none;">
         <h2>Order Confirmed!</h2>
         <p id="successText">Your order has been placed successfully.</p>
-        <a href="index.html">Back to Home</a>
+        <p id="successDetails" style="font-size:13px;color:var(--text-muted);margin-bottom:20px;"></p>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:28px;">Expected delivery: 2-3 business days within Cairo. We may contact you via WhatsApp to confirm your order.</p>
+        <a href="index.html">Continue Shopping</a>
     </div>
 
     <footer class="footer">
@@ -159,7 +167,7 @@
                 <a href="index.html#bestsellers">Shop</a>
                 <a href="contact.html">Contact</a>
             </div>
-            <p class="footer-copy">&copy; 2024 BEAUVIA&CO. All rights reserved.</p>
+            <p class="footer-copy">&copy; 2025 BEAUVIA&amp;CO. All rights reserved.</p>
         </div>
     </footer>
 
@@ -186,6 +194,7 @@
             }).join('');
 
             totalEl.innerHTML = `<span>Total</span><span>${total.toLocaleString()} EGP</span>`;
+            document.getElementById('payBtn').textContent = 'Pay ' + total.toLocaleString() + ' EGP';
         }
 
         function showError(msg) {
@@ -212,10 +221,10 @@
             const city = document.getElementById('city').value.trim();
 
             // Client-side validation
-            if (fullName.length < 2) { showError('Please enter your full name.'); btn.disabled = false; btn.textContent = 'Place Order & Pay'; return; }
-            if (!/^[\d\s\+\-()]{7,20}$/.test(phone)) { showError('Please enter a valid phone number.'); btn.disabled = false; btn.textContent = 'Place Order & Pay'; return; }
-            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email.'); btn.disabled = false; btn.textContent = 'Place Order & Pay'; return; }
-            if (address.length < 5) { showError('Please enter your delivery address.'); btn.disabled = false; btn.textContent = 'Place Order & Pay'; return; }
+            if (fullName.length < 2) { showError('Please enter your full name.'); btn.disabled = false; btn.textContent = 'Pay ' + getCart().reduce((s,i) => s + i.price * i.quantity, 0).toLocaleString() + ' EGP'; return; }
+            if (!/^[\d\s\+\-()]{7,20}$/.test(phone)) { showError('Please enter a valid phone number.'); btn.disabled = false; btn.textContent = 'Pay ' + getCart().reduce((s,i) => s + i.price * i.quantity, 0).toLocaleString() + ' EGP'; return; }
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email.'); btn.disabled = false; btn.textContent = 'Pay ' + getCart().reduce((s,i) => s + i.price * i.quantity, 0).toLocaleString() + ' EGP'; return; }
+            if (address.length < 5) { showError('Please enter your delivery address.'); btn.disabled = false; btn.textContent = 'Pay ' + getCart().reduce((s,i) => s + i.price * i.quantity, 0).toLocaleString() + ' EGP'; return; }
 
             try {
                 // Step 1: Create order
@@ -235,7 +244,7 @@
                 const orderData = await orderRes.json();
                 if (!orderRes.ok) {
                     showError(orderData.errors ? orderData.errors.join(' ') : orderData.error || 'Could not place order.');
-                    btn.disabled = false; btn.textContent = 'Place Order & Pay'; return;
+                    btn.disabled = false; btn.textContent = 'Pay ' + getCart().reduce((s,i) => s + i.price * i.quantity, 0).toLocaleString() + ' EGP'; return;
                 }
 
                 // Step 2: Initiate Paymob payment
@@ -260,10 +269,12 @@
                 const successEl = document.getElementById('successContainer');
                 successEl.style.display = 'block';
                 document.getElementById('successText').textContent =
-                    'Order #' + orderData.order.id + ' has been placed. Total: ' + Number(orderData.order.total).toLocaleString() + ' EGP. We will contact you for payment details.';
+                    'Order #' + orderData.order.id + ' has been placed successfully.';
+                document.getElementById('successDetails').textContent =
+                    'Total: ' + Number(orderData.order.total).toLocaleString() + ' EGP. We will contact you to confirm payment details.';
             } catch (err) {
                 showError('Something went wrong. Please try again.');
-                btn.disabled = false; btn.textContent = 'Place Order & Pay';
+                btn.disabled = false; btn.textContent = 'Pay ' + getCart().reduce((s,i) => s + i.price * i.quantity, 0).toLocaleString() + ' EGP';
             }
         });
 
