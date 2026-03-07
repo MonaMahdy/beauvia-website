@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — BEAUVIA&CO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg-nude: #EFE6DD; --forest-green: #1F3D2B; --soft-blush: #D8B7A6; --subtle-gold: #C6A75E; --white: #FFFFFF; --text-muted: rgba(31, 61, 43, 0.55); }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg-nude); color: var(--forest-green); line-height: 1.6; min-height: 100vh; }
+        h1, h2, h3, h4 { font-family: 'Crimson Pro', serif; font-weight: 300; letter-spacing: -0.02em; }
+
+        /* Login */
+        .login-page { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .login-box { background: var(--white); border-radius: 20px; padding: 48px 36px; width: 100%; max-width: 400px; box-shadow: 0 4px 28px rgba(31,61,43,0.08); text-align: center; }
+        .login-box h1 { font-size: 32px; margin-bottom: 8px; }
+        .login-box p { color: var(--text-muted); font-size: 14px; margin-bottom: 28px; }
+        .login-box .field-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; text-align: left; }
+        .login-box label { font-size: 12px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-muted); }
+        .login-box input { width: 100%; padding: 13px 16px; border: 1.5px solid rgba(31,61,43,0.12); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 15px; background: var(--bg-nude); color: var(--forest-green); outline: none; transition: all 0.25s; }
+        .login-box input:focus { border-color: var(--forest-green); background: var(--white); }
+        .login-box .btn { width: 100%; background: var(--forest-green); color: var(--bg-nude); padding: 14px; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .login-box .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(31,61,43,0.18); }
+        .login-error { color: #c0392b; font-size: 13px; margin-top: 12px; display: none; }
+
+        /* Dashboard */
+        .dashboard { display: none; }
+        .dash-header { background: var(--forest-green); color: var(--bg-nude); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .dash-header h2 { font-size: 20px; font-weight: 400; }
+        .dash-header-right { display: flex; gap: 12px; align-items: center; }
+        .dash-header a, .dash-header button { color: var(--bg-nude); background: rgba(239,230,221,0.15); border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; transition: background 0.2s; font-family: 'DM Sans', sans-serif; }
+        .dash-header a:hover, .dash-header button:hover { background: rgba(239,230,221,0.25); }
+
+        .dash-tabs { display: flex; gap: 0; background: var(--white); border-bottom: 1px solid rgba(31,61,43,0.08); position: sticky; top: 52px; z-index: 99; }
+        .dash-tab { flex: 1; padding: 14px; text-align: center; font-size: 14px; font-weight: 600; cursor: pointer; border: none; background: none; color: var(--text-muted); border-bottom: 2px solid transparent; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+        .dash-tab.active { color: var(--forest-green); border-bottom-color: var(--forest-green); }
+        .dash-tab:hover { color: var(--forest-green); }
+
+        .dash-content { max-width: 960px; margin: 0 auto; padding: 24px 20px 80px; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* Product Form */
+        .product-form { background: var(--white); border-radius: 16px; padding: 28px; margin-bottom: 20px; box-shadow: 0 1px 12px rgba(31,61,43,0.05); }
+        .product-form h3 { font-size: 22px; margin-bottom: 20px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-grid .full { grid-column: 1 / -1; }
+        .field-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 0; }
+        .field-group label { font-size: 12px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-muted); }
+        .field-group input, .field-group textarea, .field-group select { width: 100%; padding: 12px 14px; border: 1.5px solid rgba(31,61,43,0.12); border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; background: var(--bg-nude); color: var(--forest-green); outline: none; transition: all 0.25s; }
+        .field-group input:focus, .field-group textarea:focus { border-color: var(--forest-green); background: var(--white); }
+        .field-group textarea { resize: vertical; min-height: 80px; }
+        .form-actions { display: flex; gap: 12px; margin-top: 20px; }
+        .btn-save { background: var(--forest-green); color: var(--bg-nude); padding: 12px 28px; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .btn-save:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(31,61,43,0.18); }
+        .btn-cancel { background: none; border: 1.5px solid rgba(31,61,43,0.15); color: var(--forest-green); padding: 12px 28px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .btn-cancel:hover { border-color: var(--forest-green); }
+
+        /* Image Upload */
+        .upload-area { border: 2px dashed rgba(31,61,43,0.15); border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.3s; position: relative; }
+        .upload-area:hover { border-color: var(--forest-green); background: rgba(31,61,43,0.02); }
+        .upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+        .upload-area p { font-size: 13px; color: var(--text-muted); }
+        .upload-preview { margin-top: 12px; }
+        .upload-preview img { max-width: 120px; max-height: 120px; border-radius: 10px; object-fit: cover; }
+
+        /* Product List / Orders Table */
+        .data-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 1px 12px rgba(31,61,43,0.05); }
+        .data-table th { background: rgba(31,61,43,0.04); padding: 12px 16px; font-size: 11px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); text-align: left; }
+        .data-table td { padding: 14px 16px; font-size: 14px; border-top: 1px solid rgba(31,61,43,0.06); vertical-align: middle; }
+        .data-table tr:hover td { background: rgba(239,230,221,0.3); }
+        .data-table img { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; }
+        .btn-sm { padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+        .btn-edit { background: rgba(31,61,43,0.08); color: var(--forest-green); }
+        .btn-edit:hover { background: rgba(31,61,43,0.15); }
+        .btn-delete { background: rgba(192,57,43,0.08); color: #c0392b; }
+        .btn-delete:hover { background: rgba(192,57,43,0.15); }
+
+        /* Status badge */
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .status-pending { background: rgba(198,167,94,0.15); color: #b8960a; }
+        .status-confirmed { background: rgba(31,61,43,0.1); color: var(--forest-green); }
+        .status-shipped { background: rgba(41,128,185,0.1); color: #2980b9; }
+        .status-delivered { background: rgba(39,174,96,0.1); color: #27ae60; }
+        .status-cancelled { background: rgba(192,57,43,0.1); color: #c0392b; }
+        .status-paid { background: rgba(39,174,96,0.1); color: #27ae60; }
+        .status-unpaid { background: rgba(198,167,94,0.15); color: #b8960a; }
+        .status-failed { background: rgba(192,57,43,0.1); color: #c0392b; }
+
+        .order-details-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+        .order-details-modal.active { display: flex; }
+        .order-details-box { background: var(--white); border-radius: 18px; padding: 32px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .order-details-box h3 { font-size: 24px; margin-bottom: 20px; }
+        .detail-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; border-bottom: 1px solid rgba(31,61,43,0.06); }
+        .detail-row:last-child { border: none; }
+        .modal-close { position: absolute; top: 20px; right: 20px; background: var(--white); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+
+        .toast { position: fixed; bottom: 24px; right: 24px; background: var(--forest-green); color: var(--bg-nude); padding: 14px 24px; border-radius: 12px; font-size: 14px; font-weight: 500; box-shadow: 0 4px 20px rgba(0,0,0,0.15); transform: translateY(100px); opacity: 0; transition: all 0.3s ease; z-index: 9999; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .data-table { font-size: 13px; }
+            .data-table th, .data-table td { padding: 10px 12px; }
+            .dash-tab { font-size: 12px; padding: 12px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-page" id="loginPage">
+    <div class="login-box">
+        <h1>Admin</h1>
+        <p>BEAUVIA&CO Dashboard</p>
+        <form onsubmit="handleLogin(event)">
+            <div class="field-group">
+                <label for="loginUser">Username</label>
+                <input type="text" id="loginUser" required autocomplete="username">
+            </div>
+            <div class="field-group">
+                <label for="loginPass">Password</label>
+                <input type="password" id="loginPass" required autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn" style="margin-top:8px;">Sign In</button>
+            <p class="login-error" id="loginError"></p>
+        </form>
+    </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+    <div class="dash-header">
+        <h2>BEAUVIA&CO Admin</h2>
+        <div class="dash-header-right">
+            <a href="index.html">View Store</a>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="dash-tabs">
+        <button class="dash-tab active" onclick="switchTab('products')">Products</button>
+        <button class="dash-tab" onclick="switchTab('orders')">Orders</button>
+    </div>
+
+    <div class="dash-content">
+        <!-- Products Tab -->
+        <div class="tab-panel active" id="tab-products">
+            <div class="product-form" id="productForm">
+                <h3 id="formTitle">Add New Product</h3>
+                <input type="hidden" id="editProductId">
+                <div class="form-grid">
+                    <div class="field-group">
+                        <label>Product Name *</label>
+                        <input type="text" id="pName" placeholder="e.g. Hydrating Toner" required>
+                    </div>
+                    <div class="field-group">
+                        <label>Price (EGP) *</label>
+                        <input type="number" id="pPrice" placeholder="450" min="1" step="1" required>
+                    </div>
+                    <div class="field-group full">
+                        <label>Description</label>
+                        <textarea id="pDesc" placeholder="Product description..."></textarea>
+                    </div>
+                    <div class="field-group">
+                        <label>Category</label>
+                        <input type="text" id="pCategory" placeholder="e.g. hydrate, repair, calm">
+                    </div>
+                    <div class="field-group">
+                        <label>Tag (emoji)</label>
+                        <input type="text" id="pTag" placeholder="e.g. &#x1F4A7;">
+                    </div>
+                    <div class="field-group">
+                        <label>Badge</label>
+                        <input type="text" id="pBadge" placeholder="DIRECTLY IMPORTED" value="DIRECTLY IMPORTED">
+                    </div>
+                    <div class="field-group">
+                        <label>In Stock</label>
+                        <select id="pStock"><option value="1">Yes</option><option value="0">No</option></select>
+                    </div>
+                    <div class="field-group full">
+                        <label>Product Image</label>
+                        <div class="upload-area" id="uploadArea">
+                            <input type="file" id="imageFile" accept="image/jpeg,image/png,image/webp,image/gif" onchange="uploadImage(this)">
+                            <p>Click or drag to upload image (max 5MB)</p>
+                        </div>
+                        <div class="upload-preview" id="imagePreview"></div>
+                        <input type="hidden" id="pImage">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn-save" onclick="saveProduct()">Save Product</button>
+                    <button class="btn-cancel" onclick="resetForm()" style="display:none;" id="cancelBtn">Cancel</button>
+                </div>
+            </div>
+
+            <div style="overflow-x:auto;">
+                <table class="data-table" id="productsTable">
+                    <thead>
+                        <tr><th>Image</th><th>Name</th><th>Price</th><th>Category</th><th>Stock</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody id="productsBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div class="tab-panel" id="tab-orders">
+            <div style="overflow-x:auto;">
+                <table class="data-table" id="ordersTable">
+                    <thead>
+                        <tr><th>#</th><th>Customer</th><th>Phone</th><th>Total</th><th>Status</th><th>Payment</th><th>Date</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody id="ordersBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Order Details Modal -->
+<div class="order-details-modal" id="orderModal" onclick="if(event.target===this)closeModal()">
+    <div class="order-details-box" id="orderModalContent"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+let token = localStorage.getItem('beauvia_admin_token');
+
+// ── Auth ──
+async function handleLogin(e) {
+    e.preventDefault();
+    const errEl = document.getElementById('loginError');
+    errEl.style.display = 'none';
+    const username = document.getElementById('loginUser').value.trim();
+    const password = document.getElementById('loginPass').value;
+    try {
+        const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (!res.ok) { errEl.textContent = data.error; errEl.style.display = 'block'; return; }
+        token = data.token;
+        localStorage.setItem('beauvia_admin_token', token);
+        showDashboard();
+    } catch { errEl.textContent = 'Connection error.'; errEl.style.display = 'block'; }
+}
+
+function logout() {
+    token = null;
+    localStorage.removeItem('beauvia_admin_token');
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('loginPage').style.display = 'flex';
+}
+
+function showDashboard() {
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    loadProducts();
+    loadOrders();
+}
+
+function authHeaders() { return { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }; }
+
+// ── Tabs ──
+function switchTab(tab) {
+    document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+    if (tab === 'orders') loadOrders();
+}
+
+// ── Products ──
+async function loadProducts() {
+    try {
+        const res = await fetch('/api/products/all', { headers: authHeaders() });
+        if (res.status === 401) { logout(); return; }
+        const products = await res.json();
+        const tbody = document.getElementById('productsBody');
+        tbody.innerHTML = products.map(p => `<tr>
+            <td>${p.image ? '<img src="' + esc(p.image) + '">' : '<span style="font-size:24px;">\uD83E\uDDF4</span>'}</td>
+            <td><strong>${esc(p.name)}</strong></td>
+            <td>${Number(p.price).toLocaleString()} EGP</td>
+            <td>${esc(p.category)}</td>
+            <td>${p.in_stock ? '<span style="color:#27ae60;">In Stock</span>' : '<span style="color:#c0392b;">Out</span>'}</td>
+            <td>
+                <button class="btn-sm btn-edit" onclick="editProduct(${p.id})">Edit</button>
+                <button class="btn-sm btn-delete" onclick="deleteProduct(${p.id}, '${esc(p.name).replace(/'/g, "\\'")}')">Delete</button>
+            </td>
+        </tr>`).join('');
+    } catch(e) { console.error(e); }
+}
+
+async function saveProduct() {
+    const id = document.getElementById('editProductId').value;
+    const body = {
+        name: document.getElementById('pName').value.trim(),
+        price: Number(document.getElementById('pPrice').value),
+        description: document.getElementById('pDesc').value.trim(),
+        category: document.getElementById('pCategory').value.trim(),
+        tag: document.getElementById('pTag').value.trim(),
+        badge: document.getElementById('pBadge').value.trim(),
+        in_stock: document.getElementById('pStock').value === '1',
+        image: document.getElementById('pImage').value
+    };
+    if (!body.name || !body.price) { toast('Name and price are required.'); return; }
+    try {
+        const url = id ? '/api/products/' + id : '/api/products';
+        const method = id ? 'PUT' : 'POST';
+        const res = await fetch(url, { method, headers: authHeaders(), body: JSON.stringify(body) });
+        const data = await res.json();
+        if (!res.ok) { toast(data.errors ? data.errors.join(' ') : data.error || 'Error saving.'); return; }
+        toast(id ? 'Product updated!' : 'Product added!');
+        resetForm();
+        loadProducts();
+    } catch { toast('Connection error.'); }
+}
+
+async function editProduct(id) {
+    try {
+        const res = await fetch('/api/products/' + id, { headers: authHeaders() });
+        const p = await res.json();
+        document.getElementById('editProductId').value = p.id;
+        document.getElementById('pName').value = p.name;
+        document.getElementById('pPrice').value = p.price;
+        document.getElementById('pDesc').value = p.description || '';
+        document.getElementById('pCategory').value = p.category || '';
+        document.getElementById('pTag').value = p.tag || '';
+        document.getElementById('pBadge').value = p.badge || 'DIRECTLY IMPORTED';
+        document.getElementById('pStock').value = p.in_stock ? '1' : '0';
+        document.getElementById('pImage').value = p.image || '';
+        document.getElementById('imagePreview').innerHTML = p.image ? '<img src="' + esc(p.image) + '">' : '';
+        document.getElementById('formTitle').textContent = 'Edit Product';
+        document.getElementById('cancelBtn').style.display = 'inline-block';
+        document.getElementById('productForm').scrollIntoView({ behavior: 'smooth' });
+    } catch { toast('Could not load product.'); }
+}
+
+async function deleteProduct(id, name) {
+    if (!confirm('Delete "' + name + '"? This cannot be undone.')) return;
+    try {
+        const res = await fetch('/api/products/' + id, { method: 'DELETE', headers: authHeaders() });
+        if (!res.ok) { toast('Could not delete.'); return; }
+        toast('Product deleted.');
+        loadProducts();
+    } catch { toast('Connection error.'); }
+}
+
+function resetForm() {
+    document.getElementById('editProductId').value = '';
+    document.getElementById('pName').value = '';
+    document.getElementById('pPrice').value = '';
+    document.getElementById('pDesc').value = '';
+    document.getElementById('pCategory').value = '';
+    document.getElementById('pTag').value = '';
+    document.getElementById('pBadge').value = 'DIRECTLY IMPORTED';
+    document.getElementById('pStock').value = '1';
+    document.getElementById('pImage').value = '';
+    document.getElementById('imagePreview').innerHTML = '';
+    document.getElementById('formTitle').textContent = 'Add New Product';
+    document.getElementById('cancelBtn').style.display = 'none';
+}
+
+// ── Image Upload ──
+async function uploadImage(input) {
+    const file = input.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { toast('File too large. Max 5MB.'); return; }
+    const formData = new FormData();
+    formData.append('image', file);
+    try {
+        const res = await fetch('/api/upload', {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token },
+            body: formData
+        });
+        const data = await res.json();
+        if (!res.ok) { toast(data.error || 'Upload failed.'); return; }
+        document.getElementById('pImage').value = data.url;
+        document.getElementById('imagePreview').innerHTML = '<img src="' + esc(data.url) + '">';
+        toast('Image uploaded!');
+    } catch { toast('Upload error.'); }
+}
+
+// ── Orders ──
+async function loadOrders() {
+    try {
+        const res = await fetch('/api/orders', { headers: authHeaders() });
+        if (res.status === 401) { logout(); return; }
+        const orders = await res.json();
+        const tbody = document.getElementById('ordersBody');
+        if (!orders.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:40px;">No orders yet.</td></tr>'; return; }
+        tbody.innerHTML = orders.map(o => `<tr>
+            <td>#${o.id}</td>
+            <td>${esc(o.customer_name)}</td>
+            <td>${esc(o.customer_phone)}</td>
+            <td>${Number(o.total).toLocaleString()} EGP</td>
+            <td><span class="status-badge status-${o.status}">${o.status}</span></td>
+            <td><span class="status-badge status-${o.payment_status}">${o.payment_status}</span></td>
+            <td>${new Date(o.created_at).toLocaleDateString()}</td>
+            <td>
+                <button class="btn-sm btn-edit" onclick="viewOrder(${o.id})">View</button>
+                <select class="btn-sm" style="border:1px solid rgba(31,61,43,0.12);background:var(--bg-nude);border-radius:8px;padding:6px 8px;font-size:12px;cursor:pointer;" onchange="updateOrderStatus(${o.id}, this.value)" title="Change status">
+                    <option value="" disabled selected>Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </td>
+        </tr>`).join('');
+    } catch(e) { console.error(e); }
+}
+
+async function viewOrder(id) {
+    try {
+        const res = await fetch('/api/orders/' + id, { headers: authHeaders() });
+        const data = await res.json();
+        const o = data.order;
+        const items = data.items;
+        document.getElementById('orderModalContent').innerHTML = `
+            <h3>Order #${o.id}</h3>
+            <div class="detail-row"><span>Customer</span><span>${esc(o.customer_name)}</span></div>
+            <div class="detail-row"><span>Phone</span><span>${esc(o.customer_phone)}</span></div>
+            <div class="detail-row"><span>Email</span><span>${esc(o.customer_email || '-')}</span></div>
+            <div class="detail-row"><span>Address</span><span>${esc(o.address)}</span></div>
+            <div class="detail-row"><span>City</span><span>${esc(o.city || '-')}</span></div>
+            <div class="detail-row"><span>Status</span><span class="status-badge status-${o.status}">${o.status}</span></div>
+            <div class="detail-row"><span>Payment</span><span class="status-badge status-${o.payment_status}">${o.payment_status}</span></div>
+            <div class="detail-row"><span>Date</span><span>${new Date(o.created_at).toLocaleString()}</span></div>
+            <h4 style="margin:20px 0 12px;font-size:18px;">Items</h4>
+            ${items.map(i => `<div class="detail-row"><span>${esc(i.product_name)} x${i.quantity}</span><span>${(i.price * i.quantity).toLocaleString()} EGP</span></div>`).join('')}
+            <div class="detail-row" style="font-weight:700;border-top:2px solid rgba(31,61,43,0.1);padding-top:12px;margin-top:8px;"><span>Total</span><span>${Number(o.total).toLocaleString()} EGP</span></div>
+            <button class="btn-cancel" onclick="closeModal()" style="margin-top:20px;width:100%;text-align:center;">Close</button>
+        `;
+        document.getElementById('orderModal').classList.add('active');
+    } catch { toast('Could not load order.'); }
+}
+
+function closeModal() { document.getElementById('orderModal').classList.remove('active'); }
+
+async function updateOrderStatus(id, status) {
+    if (!status) return;
+    try {
+        const res = await fetch('/api/orders/' + id + '/status', {
+            method: 'PUT', headers: authHeaders(), body: JSON.stringify({ status })
+        });
+        if (!res.ok) { toast('Could not update status.'); return; }
+        toast('Order status updated to ' + status + '.');
+        loadOrders();
+    } catch { toast('Connection error.'); }
+}
+
+// ── Utils ──
+function esc(str) { if (!str) return ''; const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+
+function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', () => {
+    if (token) {
+        // Verify token still valid
+        fetch('/api/products/all', { headers: authHeaders() })
+            .then(r => { if (r.ok) showDashboard(); else logout(); })
+            .catch(() => logout());
+    }
+});
+</script>
+</body>
+</html>
